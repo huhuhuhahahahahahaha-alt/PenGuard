@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PenGuardian — Ultimate Pen Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #06b6d4;
+  --hover: #0e7490;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --shadow: rgba(0,0,0,0.12);
+}
+
+/* Holiday Themes */
+body[data-theme='halloween'] {
+  --bg: #1a1a1a;
+  --card: #2c2c2c;
+  --muted: #ff7518;
+  --accent: #ff5c00;
+  --hover: #ffa500;
+  --danger: #ff0000;
+  --success: #00ff00;
+}
+body[data-theme='christmas'] {
+  --bg: #f0f8f5;
+  --card: #ffffff;
+  --muted: #065f46;
+  --accent: #b91c1c;
+  --hover: #f87171;
+  --danger: #b91c1c;
+  --success: #22c55e;
+}
+
+/* Basic Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background: var(--bg); color: #0f1724; padding: 20px; transition: all 0.3s ease; }
+
+/* Layout */
+.wrap { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
+header { grid-column: 1/-1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+header h1 { font-size: 32px; font-weight: 700; color: var(--accent); transition: color 0.3s ease; }
+.tag { background: linear-gradient(90deg,#fde68a,#fbcfe8); padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: 13px; box-shadow: 0 2px 6px var(--shadow); }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 28px var(--shadow);
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px var(--shadow); }
+
+/* Inputs */
+label { font-size: 14px; color: var(--muted); margin-bottom: 6px; display: block; }
+input, select, textarea, button {
+  width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #d1d5db;
+  background: #f9fafb; font-size: 14px; outline: none; transition: all 0.2s ease;
+}
+input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(6,182,212,0.2); }
+
+/* Buttons */
+button { cursor: pointer; font-weight: 600; transition: all 0.2s ease; border: none; }
+button:hover { opacity: 0.9; }
+button.accent { background: linear-gradient(135deg,var(--accent),#0ea5e9); color: #fff; }
+button.ghost { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+button.ghost:hover { background: var(--accent); color: #fff; }
+
+/* Preview */
+.preview {
+  width: 120px; height: 90px; border-radius: 12px;
+  background: #f3f7f9; border: 2px dashed #d1d5db;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--muted); overflow: hidden;
+  transition: all 0.2s ease, background 0.3s ease;
+}
+.preview:hover { border-color: var(--accent); }
+
+/* Pen Registry */
+.pens { margin-top: 18px; display: flex; flex-direction: column; gap: 14px; }
+.pen {
+  display: flex; gap: 14px; padding: 14px;
+  border-radius: 16px; border: 1px solid #e5e7eb;
+  background: linear-gradient(180deg,var(--card),#f9fafb);
+  align-items: center; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease; position: relative;
+}
+.pen:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--shadow); }
+.pen-img {
+  width: 70px; height: 70px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: #344b4b; background: #f3f7f9;
+  flex-shrink: 0; overflow: hidden; box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* Meta & Actions */
+.meta { flex: 1; }
+.meta h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.meta p { font-size: 13px; color: var(--muted); }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+
+/* Status */
+.status { padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #fff; }
+.status.Alive { background: var(--success); }
+.status.Missing { background: var(--danger); }
+
+/* Memorial */
+.memorial-list .tiny { padding: 10px; margin-bottom: 6px; background: #fff0f6; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow); }
+
+/* Footer */
+footer { grid-column: 1/-1; text-align: center; margin-top: 28px; color: var(--muted); font-size: 13px; }
+
+/* Right Sidebar */
+.right .card { margin-bottom: 18px; }
+
+/* Responsive */
+@media(max-width: 980px) {
+  .wrap { grid-template-columns: 1fr; }
+  .pen { flex-direction: column; align-items: flex-start; }
+  .actions { width: 100%; justify-content: flex-start; }
+}
+
+/* Theme Switcher Buttons */
+.theme-switcher { display: flex; gap: 12px; margin-bottom: 12px; }
+.theme-switcher button { width: auto; padding: 6px 14px; font-size: 13px; }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qriously/4.0.2/qriously.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+</head>
+<body data-theme="default">
+<div class="wrap">
+<header>
+  <h1>PenGuardian</h1>
+  <div class="tag">Notifications • QR • Memorial</div>
+</header>
+
+<div class="theme-switcher">
+  <button class="ghost" onclick="setTheme('default')">Default</button>
+  <button class="ghost" onclick="setTheme('halloween')">Halloween</button>
+  <button class="ghost" onclick="setTheme('christmas')">Christmas</button>
+</div>
+
+<section class="card">
+  <h2>Register a Pen</h2>
+  <form id="penForm" autocomplete="off">
+    <label>Your Name</label>
+    <input id="owner" placeholder="e.g. Jamie" required>
+    <label>Pen Nickname</label>
+    <input id="nickname" placeholder="e.g. Bluey" required>
+    <label>Color / Model</label>
+    <input id="model" placeholder="Pilot G-2, blue" required>
+
+    <div style="display:grid;grid-template-columns:1fr 120px;gap:12px;margin-top:12px;">
+      <div>
+        <label class="tiny">Photo (optional)</label>
+        <input id="photoInput" type="file" accept="image/*">
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div class="preview" id="photoPreview">PNG</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:14px;align-items:center">
+      <button type="submit" class="accent">Register Pen</button>
+      <button type="button" class="ghost" id="clearForm" style="width:auto;padding:10px 14px">Clear</button>
+      <div style="flex:1;text-align:right" class="tiny">All pens are visible to everyone using this page.</div>
+    </div>
+  </form>
+
+  <div class="pens">
+    <h3>Pen Registry (Live)</h3>
+    <div id="pensContainer"></div>
+    <div id="noPens" class="tiny">No pens yet. Register one above.</div>
+  </div>
+</section>
+
+<aside class="right">
+  <div class="card">
+    <h3>Notifications</h3>
+    <label>Email to notify</label>
+    <input id="notifyEmail" placeholder="you@example.com">
+    <label style="margin-top:8px">Telegram chat ID (optional)</label>
+    <input id="telegramId" placeholder="@classgroup or chat id">
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button id="saveNotif" class="accent">Save</button>
+      <button id="testNotif" class="ghost">Send Test</button>
+    </div>
+    <div id="notifMsg" class="tiny" style="margin-top:8px">Notifications triggered when a pen is marked missing.</div>
+  </div>
+
+  <div class="card">
+    <h3>Pen Memorial Wall</h3>
+    <div id="memorialList" class="memorial-list tiny"></div>
+    <div style="margin-top:10px"><button id="clearMemorial" class="ghost">Clear Memorial</button></div>
+  </div>
+
+  <div class="card">
+    <h3>Status & Reminders</h3>
+    <div id="statuses" class="tiny" style="margin-top:8px"></div>
+  </div>
+</aside>
+
+<footer>PenGuardian — Protect your pen and keep track of it anywhere.</footer>
+</div>
+
+<script>
+// --- Theme Switcher ---
+function setTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+}
+
+// --- Firebase Setup ---
+const firebaseConfig = {
+  apiKey: "AIzaSyD4NsALm0mejZSqkejM0rij880glPpHv4A",
+  authDomain: "ballpen-guard.firebaseapp.com",
+  databaseURL: "https://ballpen-guard-default-rtdb.firebaseio.com/",
+  projectId: "ballpen-guard",
+  storageBucket: "ballpen-guard.firebasestorage.app",
+  messagingSenderId: "463039110873",
+  appId: "1:463039110873:web:1ee6f8a515bb59505a28c8",
+  measurementId: "G-Z7JCPL9LLG"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// --- DOM Elements ---
+const elements = {
+  penForm: document.getElementById('penForm'),
+  ownerIn: document.getElementById('owner'),
+  nickIn: document.getElementById('nickname'),
+  modelIn: document.getElementById('model'),
+  photoInput: document.getElementById('photoInput'),
+  photoPreview: document.getElementById('photoPreview'),
+  clearFormBtn: document.getElementById('clearForm'),
+  pensContainer: document.getElementById('pensContainer'),
+  noPens: document.getElementById('noPens'),
+  memorialList: document.getElementById('memorialList'),
+  clearMemorialBtn: document.getElementById('clearMemorial'),
+  notifyEmail: document.getElementById('notifyEmail'),
+  telegramId: document.getElementById('telegramId'),
+  saveNotifBtn: document.getElementById('saveNotif'),
+  testNotifBtn: document.getElementById('testNotif'),
+  notifMsg: document.getElementById('notifMsg'),
+  statusesEl: document.getElementById('statuses')
+};
+
+let currentPhotoBase64 = null;
+let pensData = {};
+
+// --- Helpers ---
+const generateQRValue = (length = 16) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+};
+
+const resetForm = () => {
+  elements.ownerIn.value = '';
+  elements.nickIn.value = '';
+  elements.modelIn.value = '';
+  elements.photoInput.value = '';
+  elements.photoPreview.style.backgroundImage = '';
+  elements.photoPreview.textContent = 'PNG';
+  currentPhotoBase64 = null;
+};
+
+const createBtn = (text, className, onClick) => {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = text;
+  if (className) btn.className = className;
+  btn.addEventListener('click', onClick);
+  return btn;
+};
+
+const createQRCanvas = (id, value) => {
+  const canvas = document.createElement('canvas');
+  canvas.id = `qr-${id}`;
+  canvas.width = 80;
+  canvas.height = 80;
+  canvas.style.borderRadius = '8px';
+  canvas.style.background = '#fff';
+  canvas.style.flexShrink = '0';
+  canvas.title = value;
+  new QRious({ element: canvas, value: value || generateQRValue(), size: 80 });
+  return canvas;
+};
+
+// --- Photo Preview ---
+elements.photoInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return resetForm();
+  if (!file.type.startsWith('image/')) return alert('Please select an image file.');
+  const reader = new FileReader();
+  reader.onload = ev => {
+    currentPhotoBase64 = ev.target.result;
+    elements.photoPreview.style.backgroundImage = `url(${currentPhotoBase64})`;
+    elements.photoPreview.textContent = '';
+    elements.photoPreview.style.backgroundSize = 'cover';
+    elements.photoPreview.style.backgroundPosition = 'center';
+  };
+  reader.readAsDataURL(file);
+});
+
+// --- Clear Form ---
+elements.clearFormBtn.addEventListener('click', resetForm);
+
+// --- Submit Pen ---
+elements.penForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const owner = elements.ownerIn.value.trim();
+  const nickname = elements.nickIn.value.trim();
+  const model = elements.modelIn.value.trim();
+  if (!owner || !nickname || !model) return alert('Please fill owner, nickname, and model.');
+  if (Object.values(pensData).some(p => p.nickname.toLowerCase() === nickname.toLowerCase())) {
+    return alert('A pen with this nickname already exists!');
+  }
+  const newRef = db.ref('pens').push();
+  await newRef.set({
+    id: newRef.key,
+    owner, nickname, model,
+    photo: currentPhotoBase64 || null,
+    status: 'Alive',
+    createdAt: Date.now(),
+    lastSeen: Date.now(),
+    qr: generateQRValue()
+  });
+  resetForm();
+});
+
+// --- Render Pens ---
+const renderPens = pens => {
+  elements.pensContainer.innerHTML = '';
+  if (!pens?.length) return elements.noPens.style.display = 'block';
+  elements.noPens.style.display = 'none';
+
+  pens.forEach((p, idx) => {
+    const el = document.createElement('div');
+    el.className = 'pen';
+    el.title = `Created: ${new Date(p.createdAt).toLocaleString()}`;
+
+    const img = document.createElement('div');
+    img.className = 'pen-img';
+    img.textContent = (p.nickname || '--').slice(0, 2).toUpperCase();
+    if (p.photo) { img.style.backgroundImage = `url(${p.photo})`; img.textContent = ''; img.style.backgroundSize = 'cover'; img.style.backgroundPosition = 'center'; }
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.innerHTML = `<h3>${p.nickname} — ${p.model}</h3>
+      <p><strong>${p.owner}</strong> · Status: <span class="status ${p.status}"></span> (<span class="last-seen"></span>)</p>`;
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    actions.append(
+      createBtn('Update Seen', 'ghost', async () => { await db.ref(`pens/${p.id}`).update({ lastSeen: Date.now(), status: 'Alive' }); }),
+      createBtn('Mark Missing', '', async () => {
+        if (!confirm(`Mark "${p.nickname}" as missing?`)) return;
+        await db.ref(`pens/${p.id}`).update({ status: 'Missing', lastSeen: Date.now() });
+        await db.ref('notifications').push({ type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: Date.now() });
+        alert(`🚨 Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
+      }),
+      createBtn('Mourn', 'ghost', async () => {
+        if (!confirm(`Add "${p.nickname}" to Memorial Wall?`)) return;
+        await db.ref('memorial').push({ id: p.id, nickname: p.nickname, owner: p.owner, model: p.model, when: Date.now() });
+        await db.ref(`pens/${p.id}`).remove();
+      }),
+      createBtn('Delete', 'ghost', async () => { if (!confirm(`Delete "${p.nickname}"?`)) return; await db.ref(`pens/${p.id}`).remove(); }),
+      createBtn('Print QR', 'ghost', () => printSticker(p))
+    );
+
+    const qrCanvas = createQRCanvas(p.id, p.qr);
+    el.append(img, meta, actions, qrCanvas);
+    elements.pensContainer.appendChild(el);
+  });
+};
+
+// --- Render Memorial ---
+const renderMemorial = arr => {
+  elements.memorialList.innerHTML = arr?.length
+    ? arr.map(m => `<div class="tiny" title="Added: ${new Date(m.when).toLocaleString()}">${m.nickname} — ${m.owner}</div>`).join('')
+    : '<div class="tiny">No memorials yet.</div>';
+};
+
+// --- Render Statuses ---
+const renderStatuses = list => {
+  elements.statusesEl.innerHTML = '';
+  if (!list) return;
+  list.slice(0, 6).forEach(p => {
+    const div = document.createElement('div');
+    div.style.marginBottom = '6px';
+    div.innerHTML = `<div style="padding:8px;border-radius:10px;background:#ecfeff;border:1px solid rgba(6,182,212,0.2)">
+      <strong>${p.nickname}</strong> — <span class="status">${p.status}</span> (<span class="last-seen"></span>)
+    </div>`;
+    elements.statusesEl.appendChild(div);
+  });
+};
+
+// --- Firebase Listeners ---
+db.ref('pens').on('value', snap => {
+  pensData = snap.val() || {};
+  const sortedPens = Object.values(pensData).sort((a,b)=>b.createdAt-(a.createdAt||0));
+  renderPens(sortedPens);
+  renderStatuses(sortedPens);
+});
+
+db.ref('memorial').on('value', snap => {
+  renderMemorial(Object.values(snap.val() || {}).sort((a,b)=>b.when-(a.when||0)));
+});
+
+// --- Notification Settings ---
+elements.saveNotifBtn.addEventListener('click', async () => {
+  await db.ref('notify').set({ email: elements.notifyEmail.value.trim() || null, telegram: elements.telegramId.value.trim() || null });
+  elements.notifMsg.textContent = 'Notification preferences saved.';
+});
+elements.testNotifBtn.addEventListener('click', async () => { await db.ref('notifications').push({ type: 'test', message: 'Test notification', timestamp: Date.now() }); alert('Test notification queued.'); });
+
+// --- Clear Memorial ---
+elements.clearMemorialBtn.addEventListener('click', async () => { if (!confirm('Clear memorial wall?')) return; await db.ref('memorial').remove(); });
+
+// --- Print QR Sticker ---
+const printSticker = pen => {
+  const w = window.open('', '', 'width=350,height=350');
+  w.document.write(`<h3>${pen.nickname}</h3><p>${pen.owner}</p><p>${pen.model}</p><canvas id="qr"></canvas>`);
+  new QRious({ element: w.document.getElementById('qr'), value: pen.qr || generateQRValue(), size: 200 });
+  w.print();
+};
+
+// --- Live Last Seen Update ---
+setInterval(() => {
+  Object.values(pensData).forEach((pen, idx) => {
+    const penEl = elements.pensContainer.children[idx];
+    if (!penEl) return;
+    const statusEl = penEl.querySelector('.status');
+    const lastSeenEl = penEl.querySelector('.last-seen');
+    if (statusEl && lastSeenEl) {
+      const seconds = Math.floor((Date.now() - pen.lastSeen) / 1000);
+      const d = Math.floor(seconds / 86400),
+            h = Math.floor((seconds % 86400) / 3600),
+            m = Math.floor((seconds % 3600) / 60),
+            s = seconds % 60;
+      lastSeenEl.textContent = `${d}d ${h}h ${m}m ${s}s ago`;
+      statusEl.textContent = pen.status;
+      statusEl.title = `Last seen: ${new Date(pen.lastSeen).toLocaleString()}`;
+    }
+  });
+}, 1000);
+</script>
+</body>
+</html>
