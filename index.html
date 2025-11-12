@@ -13,7 +13,7 @@
   --bg: #f4f7fb;
   --card: #ffffff;
   --muted: #6b7280;
-  --accent: #06b6d4;        /* cyan */
+  --accent: #06b6d4;
   --accent-2: #0ea5e9;
   --hover: #0e7490;
   --danger: #ef4444;
@@ -137,7 +137,7 @@ button{cursor:pointer;border:none;font-weight:700}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
 .btn.accent{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-contrast)}
 .btn.ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--accent)}
-.btn:active{transform:translateY(1px)}
+.btn.small{padding:6px 8px;font-size:13px}
 
 /* Photo preview */
 .preview{width:120px;height:90px;border-radius:12px;background:var(--muted-bg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);overflow:hidden;border:2px dashed rgba(15,23,36,0.06)}
@@ -159,6 +159,7 @@ tiny{font-size:12px;color:var(--muted)}
 .status{padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;color:#fff}
 .status.Alive{background:var(--success)}
 .status.Missing{background:var(--danger)}
+.status.Unknown{background:rgba(156,163,175,0.9)}
 
 /* memorial */
 .memorial-list .tiny{padding:10px;margin-bottom:6px;background:linear-gradient(180deg,#fff0f6,#fff6fb);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
@@ -209,9 +210,9 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 
 <!-- external libs kept -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qriously/4.0.2/qriously.min.js"></script>
+<!-- Firebase compat (your original) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
 <body data-theme="default">
   <div class="wrapper">
@@ -233,7 +234,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 
         <div class="search" id="searchBox">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.7"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <input id="globalSearch" placeholder="Search pens by nickname, owner, model..." />
+          <input id="globalSearch" placeholder="Search pens by nickname, owner, model..." aria-label="Search pens" />
         </div>
       </div>
     </div>
@@ -279,6 +280,13 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 
       <div class="pens">
         <h3 style="margin-top:18px;margin-bottom:8px">Pen Registry (Live)</h3>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <button id="exportJson" class="btn small ghost">Export JSON</button>
+          <label for="importFile" class="btn small ghost" style="display:inline-flex;align-items:center;cursor:pointer">Import JSON</label>
+          <input id="importFile" type="file" accept="application/json" style="display:none" />
+          <div style="flex:1"></div>
+          <div style="font-size:12px;color:var(--muted)">Total: <span id="penCount">0</span></div>
+        </div>
         <div id="pensContainer" class="pens-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px"></div>
         <div id="noPens" style="margin-top:8px;color:var(--muted)">No pens yet. Register one above.</div>
       </div>
@@ -289,7 +297,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
       <div class="card right">
         <h3 style="margin-bottom:8px">Themes & Presets</h3>
         <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Choose a theme — your selection is saved for next time. Use keyboard arrows to move between tiles and Enter to select.</p>
-        <div class="theme-grid" id="themeGrid" role="listbox" aria-label="Theme chooser">
+        <div class="theme-grid" id="themeGrid" role="listbox" aria-label="Theme chooser" tabindex="0">
           <!-- tiles inserted by JS -->
         </div>
         <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
@@ -302,7 +310,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
       <div class="card right">
         <h3>Notifications</h3>
         <label>Email to notify</label>
-        <input id="notifyEmail" placeholder="you@example.com">
+        <input id="notifyEmail" placeholder="you@example.com" type="email">
         <label style="margin-top:8px">Telegram chat ID (optional)</label>
         <input id="telegramId" placeholder="@classgroup or chat id">
         <div style="display:flex;gap:8px;margin-top:10px">
@@ -373,6 +381,19 @@ function renderThemeTiles(){
   });
 }
 
+// Arrow-key navigation for themeGrid
+themeGrid.addEventListener('keydown', (ev)=>{
+  const tiles = Array.from(themeGrid.querySelectorAll('.theme-tile'));
+  const idx = tiles.findIndex(t=> t === document.activeElement);
+  if (idx === -1) return;
+  let nextIdx = idx;
+  if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') nextIdx = (idx + 1) % tiles.length;
+  if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') nextIdx = (idx - 1 + tiles.length) % tiles.length;
+  if (nextIdx !== idx) { ev.preventDefault(); tiles[nextIdx].focus(); }
+  if (ev.key === 'Home') { ev.preventDefault(); tiles[0].focus(); }
+  if (ev.key === 'End') { ev.preventDefault(); tiles[tiles.length-1].focus(); }
+});
+
 // Keep signature & behavior: sets body data-theme and persists
 function setTheme(theme) {
   document.body.setAttribute('data-theme', theme);
@@ -380,6 +401,9 @@ function setTheme(theme) {
   currentThemeLabel.textContent = theme;
   // mark aria-selected
   Array.from(themeGrid.children).forEach(c => c.setAttribute('aria-selected', c.dataset.theme === theme ? 'true' : 'false'));
+  // visually focus the selected tile
+  const selected = themeGrid.querySelector(`[data-theme="${theme}"]`);
+  if (selected) selected.classList.add('selected');
 }
 document.getElementById('btnResetTheme').addEventListener('click', ()=> {
   localStorage.removeItem('penGuardianTheme');
@@ -391,7 +415,7 @@ renderThemeTiles();
 setTheme(savedTheme);
 
 /* ============================
-   Keep Firebase config + original logic
+   Firebase config + safer wrappers
    ============================ */
 const firebaseConfig = {
   apiKey: "AIzaSyD4NsALm0mejZSqkejM0rij880glPpHv4A",
@@ -403,8 +427,89 @@ const firebaseConfig = {
   appId: "1:463039110873:web:1ee6f8a515bb59505a28c8",
   measurementId: "G-Z7JCPL9LLG"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+
+let db = null;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+} catch (e) {
+  console.warn('Firebase init failed, falling back to localStorage mode', e);
+}
+
+// helper wrappers to gracefully fallback to localStorage if firebase unavailable
+function safeSet(path, value) {
+  if (db) {
+    return db.ref(path).set(value).catch(err => {
+      console.warn('Firebase set failed', err);
+      fallbackLocalSet(path, value);
+    });
+  } else {
+    fallbackLocalSet(path, value);
+    return Promise.resolve();
+  }
+}
+function safePush(path, value) {
+  if (db) {
+    return db.ref(path).push(value).catch(err => {
+      console.warn('Firebase push failed', err);
+      fallbackLocalPush(path, value);
+    });
+  } else {
+    fallbackLocalPush(path, value);
+    return Promise.resolve();
+  }
+}
+function safeUpdate(path, value) {
+  if (db) {
+    return db.ref(path).update(value).catch(err => {
+      console.warn('Firebase update failed', err);
+      fallbackLocalUpdate(path, value);
+    });
+  } else {
+    fallbackLocalUpdate(path, value);
+    return Promise.resolve();
+  }
+}
+function safeRemove(path) {
+  if (db) {
+    return db.ref(path).remove().catch(err => {
+      console.warn('Firebase remove failed', err);
+      fallbackLocalRemove(path);
+    });
+  } else {
+    fallbackLocalRemove(path);
+    return Promise.resolve();
+  }
+}
+
+/* --- local fallback helpers (very simple) --- */
+function fallbackLocalSet(path, value) {
+  const key = `penGuardian_fallback_${path.replace(/\//g,'_')}`;
+  localStorage.setItem(key, JSON.stringify(value));
+}
+function fallbackLocalPush(path, value) {
+  // emulate basic array push
+  const key = `penGuardian_fallback_${path.replace(/\//g,'_')}`;
+  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  arr.push(value);
+  localStorage.setItem(key, JSON.stringify(arr));
+}
+function fallbackLocalUpdate(path, value) {
+  // naive: path like pens/<id>
+  if (!path.includes('/')) return fallbackLocalSet(path, value);
+  const [parent, id] = path.split('/');
+  const key = `penGuardian_fallback_${parent}`;
+  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  const idx = arr.findIndex(x=> x.id === id);
+  if (idx >= 0) { arr[idx] = { ...arr[idx], ...value }; localStorage.setItem(key, JSON.stringify(arr)); }
+}
+function fallbackLocalRemove(path) {
+  if (!path.includes('/')) return fallbackLocalSet(path, null);
+  const [parent, id] = path.split('/');
+  const key = `penGuardian_fallback_${parent}`;
+  const arr = JSON.parse(localStorage.getItem(key) || '[]').filter(x=> x.id !== id);
+  localStorage.setItem(key, JSON.stringify(arr));
+}
 
 /* --- DOM Elements (kept original IDs & elements) --- */
 const elements = {
@@ -424,11 +529,14 @@ const elements = {
   saveNotifBtn: document.getElementById('saveNotif'),
   testNotifBtn: document.getElementById('testNotif'),
   notifMsg: document.getElementById('notifMsg'),
-  statusesEl: document.getElementById('statuses')
+  statusesEl: document.getElementById('statuses'),
+  penCount: document.getElementById('penCount'),
+  exportJson: document.getElementById('exportJson'),
+  importFile: document.getElementById('importFile')
 };
 
 let currentPhotoBase64 = null;
-let pensData = {};
+let pensData = {}; // object keyed by id
 
 /* --- Helpers (kept original helpers & signatures) --- */
 const generateQRValue = (length = 16) => {
@@ -502,16 +610,33 @@ elements.penForm.addEventListener('submit', async e => {
   if (Object.values(pensData).some(p => p.nickname && p.nickname.toLowerCase() === nickname.toLowerCase())) {
     return alert('A pen with this nickname already exists!');
   }
-  const newRef = db.ref('pens').push();
-  await newRef.set({
-    id: newRef.key,
+  // Create local id even if firebase supplies one
+  const id = 'local_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+  const payload = {
+    id,
     owner, nickname, model,
     photo: currentPhotoBase64 || null,
     status: 'Alive',
     createdAt: Date.now(),
     lastSeen: Date.now(),
     qr: generateQRValue()
-  });
+  };
+
+  // Try to push to firebase under 'pens' - if using firebase we push and firebase will create key; but we keep our local id so UI works offline
+  try {
+    if (db) {
+      const newRef = db.ref('pens').push();
+      payload.id = newRef.key;
+      await newRef.set(payload);
+    } else {
+      // fallback local push
+      fallbackLocalPush('pens', payload);
+    }
+  } catch (err) {
+    console.warn('Failed to push to firebase, using fallback', err);
+    fallbackLocalPush('pens', payload);
+  }
+
   resetForm();
 });
 
@@ -520,14 +645,17 @@ const renderPens = pens => {
   elements.pensContainer.innerHTML = '';
   if (!pens?.length) {
     elements.noPens.style.display = 'block';
+    elements.penCount.textContent = 0;
     return;
   }
   elements.noPens.style.display = 'none';
+  elements.penCount.textContent = pens.length;
 
   pens.forEach((p, idx) => {
     const el = document.createElement('div');
     el.className = 'pen card';
     el.title = `Created: ${new Date(p.createdAt).toLocaleString()}`;
+    el.dataset.id = p.id;
 
     const img = document.createElement('div');
     img.className = 'pen-img';
@@ -542,24 +670,45 @@ const renderPens = pens => {
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.innerHTML = `<h3>${escapeHtml(p.nickname)} <small class="small">— ${escapeHtml(p.model)}</small></h3>
-      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${p.status}"></span> (<span class="last-seen"></span>)</p>`;
+      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${escapeHtml(p.status || 'Unknown')}"></span> (<span class="last-seen"></span>)</p>`;
 
     const actions = document.createElement('div');
     actions.className = 'actions';
     actions.append(
-      createBtn('Update Seen', 'ghost', async () => { await db.ref(`pens/${p.id}`).update({ lastSeen: Date.now(), status: 'Alive' }); }),
+      createBtn('Update Seen', 'ghost', async () => {
+        try {
+          await safeUpdate(`pens/${p.id}`, { lastSeen: Date.now(), status: 'Alive' });
+        } catch (err) {
+          console.warn(err);
+        }
+      }),
       createBtn('Mark Missing', '', async () => {
         if (!confirm(`Mark "${p.nickname}" as missing?`)) return;
-        await db.ref(`pens/${p.id}`).update({ status: 'Missing', lastSeen: Date.now() });
-        await db.ref('notifications').push({ type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: Date.now() });
-        alert(`🚨 Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
+        try {
+          await safeUpdate(`pens/${p.id}`, { status: 'Missing', lastSeen: Date.now() });
+          await safePush('notifications', { type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: Date.now() });
+          alert(`🚨 Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
+        } catch (err) {
+          console.warn(err);
+        }
       }),
       createBtn('Mourn', 'ghost', async () => {
         if (!confirm(`Add "${p.nickname}" to Memorial Wall?`)) return;
-        await db.ref('memorial').push({ id: p.id, nickname: p.nickname, owner: p.owner, model: p.model, when: Date.now() });
-        await db.ref(`pens/${p.id}`).remove();
+        try {
+          await safePush('memorial', { id: p.id, nickname: p.nickname, owner: p.owner, model: p.model, when: Date.now() });
+          await safeRemove(`pens/${p.id}`);
+        } catch (err) {
+          console.warn(err);
+        }
       }),
-      createBtn('Delete', 'ghost', async () => { if (!confirm(`Delete "${p.nickname}"?`)) return; await db.ref(`pens/${p.id}`).remove(); }),
+      createBtn('Delete', 'ghost', async () => {
+        if (!confirm(`Delete "${p.nickname}"?`)) return;
+        try {
+          await safeRemove(`pens/${p.id}`);
+        } catch (err) {
+          console.warn(err);
+        }
+      }),
       createBtn('Print QR', 'ghost', () => printSticker(p))
     );
 
@@ -586,51 +735,97 @@ const renderStatuses = list => {
     const div = document.createElement('div');
     div.style.marginBottom = '6px';
     div.innerHTML = `<div style="padding:8px;border-radius:10px;background:rgba(236,254,255,0.9);border:1px solid rgba(6,182,212,0.08)">
-      <strong>${escapeHtml(p.nickname)}</strong> — <span class="status ${p.status}">${p.status}</span> (<span class="last-seen"></span>)
+      <strong>${escapeHtml(p.nickname)}</strong> — <span class="status ${escapeHtml(p.status || 'Unknown')}">${escapeHtml(p.status || 'Unknown')}</span> (<span class="last-seen"></span>)
     </div>`;
     elements.statusesEl.appendChild(div);
   });
 };
 
-/* --- Firebase Listeners (unchanged) --- */
-db.ref('pens').on('value', snap => {
-  pensData = snap.val() || {};
-  const sortedPens = Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
-  renderPens(sortedPens);
-  renderStatuses(sortedPens);
-});
+/* --- Firebase Listeners (unchanged) but safer: if no firebase, load from fallback localStorage --- */
+const attachListenersOrLoadFallback = () => {
+  if (db) {
+    db.ref('pens').on('value', snap => {
+      pensData = snap.val() || {};
+      const sortedPens = Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+      renderPens(sortedPens);
+      renderStatuses(sortedPens);
+    });
 
-db.ref('memorial').on('value', snap => {
-  renderMemorial(Object.values(snap.val() || {}).sort((a,b)=> (b.when||0) - (a.when||0)));
-});
+    db.ref('memorial').on('value', snap => {
+      renderMemorial(Object.values(snap.val() || {}).sort((a,b)=> (b.when||0) - (a.when||0)));
+    });
+  } else {
+    // load fallback pens from localStorage key 'penGuardian_fallback_pens'
+    const raw = localStorage.getItem('penGuardian_fallback_pens') || '[]';
+    const arr = JSON.parse(raw);
+    // convert to object keyed by id
+    pensData = arr.reduce((acc, p) => { acc[p.id] = p; return acc; }, {});
+    const sortedPens = arr.sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+    renderPens(sortedPens);
+    renderStatuses(sortedPens);
+    const memorialRaw = localStorage.getItem('penGuardian_fallback_memorial') || '[]';
+    const memorialArr = JSON.parse(memorialRaw);
+    renderMemorial(memorialArr.sort((a,b)=> (b.when||0) - (a.when||0)));
+  }
+};
 
-/* --- Notification Settings (unchanged) --- */
+attachListenersOrLoadFallback();
+
+/* --- Notification Settings (unchanged, but using safeSet) --- */
 elements.saveNotifBtn.addEventListener('click', async () => {
-  await db.ref('notify').set({ email: elements.notifyEmail.value.trim() || null, telegram: elements.telegramId.value.trim() || null });
+  await safeSet('notify', { email: elements.notifyEmail.value.trim() || null, telegram: elements.telegramId.value.trim() || null });
   elements.notifMsg.textContent = 'Notification preferences saved.';
 });
-elements.testNotifBtn.addEventListener('click', async () => { await db.ref('notifications').push({ type: 'test', message: 'Test notification', timestamp: Date.now() }); alert('Test notification queued.'); });
+elements.testNotifBtn.addEventListener('click', async () => {
+  await safePush('notifications', { type: 'test', message: 'Test notification', timestamp: Date.now() });
+  alert('Test notification queued.');
+});
 
 /* --- Clear Memorial --- */
-elements.clearMemorialBtn.addEventListener('click', async () => { if (!confirm('Clear memorial wall?')) return; await db.ref('memorial').remove(); });
+elements.clearMemorialBtn.addEventListener('click', async () => {
+  if (!confirm('Clear memorial wall?')) return;
+  await safeRemove('memorial');
+});
 
 /* --- Print QR Sticker --- */
 const printSticker = pen => {
-  const w = window.open('', '', 'width=350,height=350');
-  w.document.write(`<h3 style="font-family:Inter,Arial">${escapeHtml(pen.nickname)}</h3><p>${escapeHtml(pen.owner)}</p><p>${escapeHtml(pen.model)}</p><canvas id="qr"></canvas>`);
-  try {
-    new QRious({ element: w.document.getElementById('qr'), value: pen.qr || generateQRValue(), size: 200 });
-  } catch (e) {
-    console.warn('QR print failed', e);
-  }
-  w.print();
+  const w = window.open('', '', 'width=400,height=500');
+  if (!w) return alert('Popup blocked — please allow popups to print QR.');
+  const html = `
+    <html>
+      <head>
+        <title>QR Sticker - ${escapeHtml(pen.nickname)}</title>
+        <style>body{font-family:Inter,Arial;padding:16px}</style>
+      </head>
+      <body>
+        <h3>${escapeHtml(pen.nickname)}</h3>
+        <p><strong>${escapeHtml(pen.owner)}</strong></p>
+        <p>${escapeHtml(pen.model)}</p>
+        <canvas id="qr"></canvas>
+      </body>
+    </html>`;
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+  // Wait a tick for DOM to be available
+  setTimeout(()=> {
+    try {
+      const canvas = w.document.getElementById('qr');
+      new QRious({ element: canvas, value: pen.qr || generateQRValue(), size: 200 });
+      w.focus();
+      w.print();
+    } catch (e) {
+      console.warn('QR print failed', e);
+      w.print();
+    }
+  }, 200);
 };
 
-/* --- Live Last Seen Update (unchanged, but safer guard) --- */
+/* --- Live Last Seen Update (improved: map by data-id) --- */
 setInterval(() => {
-  const penEls = elements.pensContainer.children;
-  Object.values(pensData).forEach((pen, idx) => {
-    const penEl = penEls[idx];
+  // iterate pensData entries
+  Object.values(pensData).forEach((pen) => {
+    const penEl = document.querySelector(`.pen[data-id="${pen.id}"]`);
     if (!penEl) return;
     const statusEl = penEl.querySelector('.status');
     const lastSeenEl = penEl.querySelector('.last-seen');
@@ -643,19 +838,25 @@ setInterval(() => {
       lastSeenEl.textContent = `${d}d ${h}h ${m}m ${s}s ago`;
       statusEl.textContent = pen.status || 'Unknown';
       statusEl.title = `Last seen: ${new Date(pen.lastSeen || pen.createdAt || Date.now()).toLocaleString()}`;
+      // ensure status class is set properly
+      statusEl.className = 'status ' + (pen.status || 'Unknown');
     }
   });
+
+  // Update memorial last-seen in the right column statuses too (if applicable)
+  // (We re-render statuses from pensData on db changes; this keeps live update)
 }, 1000);
 
-/* --- Search (small UX improvement) --- */
+/* --- Search (small UX improvement + debounce) --- */
 const globalSearch = document.getElementById('globalSearch');
-globalSearch.addEventListener('input', e => {
+function debounce(fn, wait=250){ let t; return (...args)=>{ clearTimeout(t); t = setTimeout(()=> fn(...args), wait); }; }
+globalSearch.addEventListener('input', debounce(e => {
   const q = e.target.value.trim().toLowerCase();
   const list = Object.values(pensData || {});
   if (!q){ renderPens(list.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0))); return; }
   const filtered = list.filter(p => (p.nickname||'').toLowerCase().includes(q) || (p.owner||'').toLowerCase().includes(q) || (p.model||'').toLowerCase().includes(q));
   renderPens(filtered.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)));
-});
+}, 200));
 
 // mobile search toggle
 const searchToggle = document.getElementById('searchToggle');
@@ -680,12 +881,93 @@ function escapeHtml(unsafe) {
 }
 
 /* --- init: load saved notif settings (if any) --- */
-db.ref('notify').once('value').then(snap => {
-  const v = snap.val() || {};
-  elements.notifyEmail.value = v.email || '';
-  elements.telegramId.value = v.telegram || '';
+if (db) {
+  db.ref('notify').once('value').then(snap => {
+    const v = snap.val() || {};
+    elements.notifyEmail.value = v.email || '';
+    elements.telegramId.value = v.telegram || '';
+  }).catch(()=>{});
+} else {
+  // load fallback notify
+  const raw = localStorage.getItem('penGuardian_fallback_notify');
+  if (raw) {
+    try {
+      const v = JSON.parse(raw);
+      elements.notifyEmail.value = v.email || '';
+      elements.telegramId.value = v.telegram || '';
+    } catch(e){}
+  }
+}
+
+/* ============================
+   Export / Import registry
+   ============================ */
+elements.exportJson.addEventListener('click', () => {
+  const arr = Object.values(pensData || {});
+  const blob = new Blob([JSON.stringify(arr, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `pen_guardian_export_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 });
 
+elements.importFile.addEventListener('change', (ev) => {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const arr = JSON.parse(e.target.result);
+      if (!Array.isArray(arr)) throw new Error('Invalid format');
+      // push each to db/fallback
+      for (const p of arr) {
+        // sanitize minimal fields
+        const payload = {
+          id: p.id || ('local_' + Date.now() + '_' + Math.random().toString(36).slice(2,8)),
+          owner: p.owner || 'Unknown',
+          nickname: p.nickname || 'Unnamed',
+          model: p.model || '',
+          photo: p.photo || null,
+          status: p.status || 'Alive',
+          createdAt: p.createdAt || Date.now(),
+          lastSeen: p.lastSeen || Date.now(),
+          qr: p.qr || generateQRValue()
+        };
+        if (db) {
+          const newRef = db.ref('pens').push();
+          payload.id = newRef.key;
+          await newRef.set(payload);
+        } else {
+          fallbackLocalPush('pens', payload);
+        }
+      }
+      alert('Import completed.');
+    } catch (err) {
+      alert('Import failed: ' + err.message);
+    } finally {
+      elements.importFile.value = '';
+    }
+  };
+  reader.readAsText(file);
+});
+
+/* ============================
+   Keep local in-memory updated when firebase emits changes
+   (We already attached listeners above; ensure pensData updated)
+   ============================ */
+// When firebase emits, attachListenersOrLoadFallback already updates pensData and calls render
+
+// small UX niceties: focus search if user presses "/" anywhere
+window.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    globalSearch.focus();
+  }
+});
 </script>
 </body>
 </html>
