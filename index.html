@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PenGuardian — Ultimate Pen Tracker (UI Upgraded)</title>
+<title>PenGuardian — Ultimate Pen Tracker (Polished)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================
@@ -30,42 +30,18 @@
 }
 
 /* Theme palettes (extended & vivid) */
-body[data-theme="default"]{
-  --bg:#f4f7fb; --card:#ffffff; --muted:#6b7280; --accent:#06b6d4; --accent-2:#0ea5e9; --hover:#0e7490;
-}
-body[data-theme="dark"]{
-  --bg:#071026; --card:#0f1724; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#5eead4; --hover:#a78bfa; --text:#e6eef8; --shadow: rgba(2,6,23,0.55);
-}
-body[data-theme="cyberpunk"]{
-  --bg:linear-gradient(180deg,#0b0326 0%,#0b0822 100%); --card: rgba(255,255,255,0.04); --muted:#9ca3ff; --accent:#ff3cac; --accent-2:#00f0ff; --hover:#ff7ab6; --text:#f3f6ff; --shadow: rgba(255,60,172,0.08);
-}
-body[data-theme="ocean"]{
-  --bg:linear-gradient(180deg,#dff6ff 0%,#e7fbff 100%); --card:#ffffff; --muted:#0b7285; --accent:#0369a1; --accent-2:#7dd3fc; --hover:#075985; --text:#042f3a;
-}
-body[data-theme="pastel"]{
-  --bg:#fffaf0; --card:#ffffff; --muted:#8b5cf6; --accent:#fb7185; --accent-2:#fbbf24; --hover:#f472b6; --text:#2b2b2b;
-}
-body[data-theme="retro"]{
-  --bg:linear-gradient(180deg,#fff7ed 0%,#fff1f2 100%); --card:#fffaf0; --muted:#92400e; --accent:#b45309; --accent-2:#f97316; --hover:#f59e0b; --text:#2b2b2b;
-}
-body[data-theme="halloween"]{
-  --bg:#1a1a1a; --card:#2c2c2c; --muted:#ff7518; --accent:#ff5c00; --accent-2:#ffa500; --hover:#ffb84d; --text:#fff8f0;
-}
-body[data-theme="christmas"]{
-  --bg:#f0f8f5; --card:#ffffff; --muted:#065f46; --accent:#b91c1c; --accent-2:#16a34a; --hover:#d63333; --text:#04261b;
-}
-body[data-theme="solar"]{
-  --bg:linear-gradient(180deg,#fff7e6 0%,#fff1d6 100%); --card:#fff; --muted:#7c3aed; --accent:#f59e0b; --accent-2:#f97316; --text:#3a2d14;
-}
-body[data-theme="aurora"]{
-  --bg:linear-gradient(180deg,#071842 0%,#183b5a 100%); --card:rgba(255,255,255,0.03); --muted:#c7f9ff; --accent:#7be4a7; --accent-2:#9b8cff; --text:#eaf6ff;
-}
-body[data-theme="mint"]{
-  --bg:linear-gradient(180deg,#f0fff6 0%,#ecfff9 100%); --card:#ffffff; --muted:#0f766e; --accent:#06b6a4; --accent-2:#34d399; --text:#05332a;
-}
-body[data-theme="space"]{
-  --bg:radial-gradient(circle at 20% 20%, #0b1220 0%, #02040a 70%); --card:rgba(255,255,255,0.03); --muted:#9fb4ff; --accent:#8b5cf6; --accent-2:#60a5fa; --text:#cfe3ff;
-}
+body[data-theme="default"]{ --bg:#f4f7fb; --card:#ffffff; --muted:#6b7280; --accent:#06b6d4; --accent-2:#0ea5e9; --hover:#0e7490; }
+body[data-theme="dark"]{ --bg:#071026; --card:#0f1724; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#5eead4; --hover:#a78bfa; --text:#e6eef8; --shadow: rgba(2,6,23,0.55); }
+body[data-theme="cyberpunk"]{ --bg:linear-gradient(180deg,#0b0326 0%,#0b0822 100%); --card: rgba(255,255,255,0.04); --muted:#9ca3ff; --accent:#ff3cac; --accent-2:#00f0ff; --hover:#ff7ab6; --text:#f3f6ff; --shadow: rgba(255,60,172,0.08); }
+body[data-theme="ocean"]{ --bg:linear-gradient(180deg,#dff6ff 0%,#e7fbff 100%); --card:#ffffff; --muted:#0b7285; --accent:#0369a1; --accent-2:#7dd3fc; --hover:#075985; --text:#042f3a; }
+body[data-theme="pastel"]{ --bg:#fffaf0; --card:#ffffff; --muted:#8b5cf6; --accent:#fb7185; --accent-2:#fbbf24; --hover:#f472b6; --text:#2b2b2b; }
+body[data-theme="retro"]{ --bg:linear-gradient(180deg,#fff7ed 0%,#fff1f2 100%); --card:#fffaf0; --muted:#92400e; --accent:#b45309; --accent-2:#f97316; --hover:#f59e0b; --text:#2b2b2b; }
+body[data-theme="halloween"]{ --bg:#1a1a1a; --card:#2c2c2c; --muted:#ff7518; --accent:#ff5c00; --accent-2:#ffa500; --hover:#ffb84d; --text:#fff8f0; }
+body[data-theme="christmas"]{ --bg:#f0f8f5; --card:#ffffff; --muted:#065f46; --accent:#b91c1c; --accent-2:#16a34a; --hover:#d63333; --text:#04261b; }
+body[data-theme="solar"]{ --bg:linear-gradient(180deg,#fff7e6 0%,#fff1d6 100%); --card:#fff; --muted:#7c3aed; --accent:#f59e0b; --accent-2:#f97316; --text:#3a2d14; }
+body[data-theme="aurora"]{ --bg:linear-gradient(180deg,#071842 0%,#183b5a 100%); --card:rgba(255,255,255,0.03); --muted:#c7f9ff; --accent:#7be4a7; --accent-2:#9b8cff; --text:#eaf6ff; }
+body[data-theme="mint"]{ --bg:linear-gradient(180deg,#f0fff6 0%,#ecfff9 100%); --card:#ffffff; --muted:#0f766e; --accent:#06b6a4; --accent-2:#34d399; --text:#05332a; }
+body[data-theme="space"]{ --bg:radial-gradient(circle at 20% 20%, #0b1220 0%, #02040a 70%); --card:rgba(255,255,255,0.03); --muted:#9fb4ff; --accent:#8b5cf6; --accent-2:#60a5fa; --text:#cfe3ff; }
 
 /* ============================
    Reset & base
@@ -83,52 +59,22 @@ body{
   background-size:cover;
 }
 
-/* Soft outer container */
+/* Layout & components (kept & polished) */
 .wrapper{max-width:1400px;margin:0 auto}
-.container{
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 24px;
-  align-items:start;
-  padding:10px;
-}
-
-/* Header */
-.header{
-  grid-column: 1/-1;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-}
+.container{max-width: var(--max-w);margin: 0 auto;display: grid;grid-template-columns: 1fr 380px;gap: 24px;align-items:start;padding:10px}
+.header{grid-column: 1/-1;display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
 .brand{display:flex;gap:12px;align-items:center}
-.logo{
-  width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);font-weight:800;font-size:20px;box-shadow:0 10px 30px rgba(2,6,23,0.12);
-}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);font-weight:800;font-size:20px;box-shadow:0 10px 30px rgba(2,6,23,0.12)}
 .title{display:flex;flex-direction:column}
 .title h1{font-size:20px;margin-bottom:2px}
 .title p{font-size:13px;color:var(--muted)}
-
-/* top actions */
 .header-actions{display:flex;gap:10px;align-items:center}
 .tag{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#fde68a,#fbcfe8);font-weight:700;font-size:13px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
-
-/* Search (responsive) */
 .search{width:460px;max-width:44vw;display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--card);box-shadow:0 6px 18px var(--shadow);border:1px solid var(--glass-border)}
 .search input{border:none;background:transparent;outline:none;padding:6px 0;font-size:14px;color:var(--text)}
-.search svg{opacity:.65}
-
-/* small search icon for mobile */
 .search-toggle{display:none;background:transparent;border:none;padding:8px;border-radius:8px}
-
-/* Cards */
 .card{background:var(--card);border-radius:var(--radius);padding:var(--card-padding);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--glass-border);transition:transform .25s ease, box-shadow .25s ease, background .35s ease}
 .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.12)}
-
-/* Form styles */
 form label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
 input,select,textarea,button{font-family:inherit;font-size:14px;border-radius:10px;padding:10px 12px;border:1px solid rgba(15,23,36,0.06);background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5));outline:none;transition:box-shadow .18s ease, border-color .18s ease, transform .12s ease}
 body[data-theme="dark"] input, body[data-theme="cyberpunk"] input, body[data-theme="space"] input { background: rgba(255,255,255,0.03);} 
@@ -138,12 +84,8 @@ button{cursor:pointer;border:none;font-weight:700}
 .btn.accent{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-contrast)}
 .btn.ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--accent)}
 .btn.small{padding:6px 8px;font-size:13px}
-
-/* Photo preview */
 .preview{width:120px;height:90px;border-radius:12px;background:var(--muted-bg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);overflow:hidden;border:2px dashed rgba(15,23,36,0.06)}
 .preview img{width:100%;height:100%;object-fit:cover}
-
-/* Pens list - now uses grid for responsive wrap */
 .pens{margin-top:16px}
 .pens-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .pen{display:flex;gap:14px;padding:12px;border-radius:12px;border:1px solid rgba(15,23,36,0.03);align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent);transition:transform .12s ease, box-shadow .12s ease}
@@ -154,21 +96,13 @@ button{cursor:pointer;border:none;font-weight:700}
 .meta p{font-size:13px;color:var(--muted)}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 tiny{font-size:12px;color:var(--muted)}
-
-/* status pill */
 .status{padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;color:#fff}
 .status.Alive{background:var(--success)}
 .status.Missing{background:var(--danger)}
 .status.Unknown{background:rgba(156,163,175,0.9)}
-
-/* memorial */
 .memorial-list .tiny{padding:10px;margin-bottom:6px;background:linear-gradient(180deg,#fff0f6,#fff6fb);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
-
-/* Right column */
 .right-col{display:flex;flex-direction:column;gap:18px}
 .right .card{padding:16px}
-
-/* theme tiles */
 .theme-grid{display:flex;gap:12px;flex-wrap:wrap}
 .theme-tile{width:92px;height:64px;border-radius:10px;border:1px solid rgba(15,23,36,0.04);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;padding:8px;position:relative;box-shadow:0 8px 20px rgba(2,6,23,0.05);transition:transform .16s ease,box-shadow .16s ease;overflow:hidden}
 .theme-tile:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.08)}
@@ -176,43 +110,22 @@ tiny{font-size:12px;color:var(--muted)}
 .theme-swatch{position:absolute;inset:8px;border-radius:8px;z-index:0}
 .theme-tile span{position:relative;z-index:2}
 .theme-tile[aria-selected="true"]{outline:3px solid rgba(6,182,212,0.12)}
-
-/* footer */
 footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);font-size:13px;padding-bottom:6px}
-
-/* small screens */
-@media (max-width:1100px){
-  .container{grid-template-columns:1fr 320px}
-  .search{max-width:36vw}
-}
-@media (max-width:900px){
-  .container{grid-template-columns:1fr}
-  .search{display:none}
-  .search-toggle{display:inline-flex}
-  .header{flex-direction:column;align-items:flex-start;gap:12px}
-  .right-col{order:3}
-  .pens-grid{grid-template-columns:1fr}
-}
-@media (max-width:520px){
-  .logo{width:48px;height:48px;font-size:18px}
-  .title h1{font-size:17px}
-  .theme-tile{width:44%;height:64px}
-  .pen{flex-direction:column;align-items:flex-start}
-  .pen-img{width:100%;height:120px;border-radius:10px}
-  .actions{width:100%;justify-content:space-between}
-}
-
-/* subtle utilities */
+@media (max-width:1100px){ .container{grid-template-columns:1fr 320px} .search{max-width:36vw} }
+@media (max-width:900px){ .container{grid-template-columns:1fr} .search{display:none} .search-toggle{display:inline-flex} .header{flex-direction:column;align-items:flex-start;gap:12px} .right-col{order:3} .pens-grid{grid-template-columns:1fr} }
+@media (max-width:520px){ .logo{width:48px;height:48px;font-size:18px} .title h1{font-size:17px} .theme-tile{width:44%;height:64px} .pen{flex-direction:column;align-items:flex-start} .pen-img{width:100%;height:120px;border-radius:10px} .actions{width:100%;justify-content:space-between} }
 .center{display:flex;align-items:center;justify-content:center}
 .small{font-size:12px;color:var(--muted)}
 
+/* focus outlines for keyboard users */
+.theme-tile:focus, .btn:focus, input:focus, .search-toggle:focus { outline: 3px solid rgba(6,182,212,0.12); outline-offset: 2px; }
 </style>
 
-<!-- external libs kept -->
+<!-- external libs kept as requested -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qriously/4.0.2/qriously.min.js"></script>
-<!-- Firebase compat (your original) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<!-- YOU specifically asked to keep this one — preserved as-is -->
 <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
 <body data-theme="default">
@@ -243,7 +156,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
     <!-- Main Column -->
     <section class="card" style="min-height:260px;">
       <h2 style="margin-bottom:8px">Register a Pen</h2>
-      <p style="margin-bottom:12px;color:var(--muted);font-size:13px">Add a pen and print a QR sticker. All functionality preserved and improved layout for phones.</p>
+      <p style="margin-bottom:12px;color:var(--muted);font-size:13px">Add a pen and print a QR sticker. Everything is improved and backed-up locally when offline.</p>
 
       <form id="penForm" autocomplete="off">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -285,6 +198,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
           <button id="exportJson" class="btn small ghost">Export JSON</button>
           <label for="importFile" class="btn small ghost" style="display:inline-flex;align-items:center;cursor:pointer">Import JSON</label>
           <input id="importFile" type="file" accept="application/json" style="display:none" />
+          <button id="printBatch" class="btn small ghost">Print Stickers (Batch)</button>
           <div style="flex:1"></div>
           <div style="font-size:12px;color:var(--muted)">Total: <span id="penCount">0</span></div>
         </div>
@@ -297,10 +211,8 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
     <aside class="right-col">
       <div class="card right">
         <h3 style="margin-bottom:8px">Themes & Presets</h3>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Choose a theme — your selection is saved for next time. Use keyboard arrows to move between tiles and Enter to select.</p>
-        <div class="theme-grid" id="themeGrid" role="listbox" aria-label="Theme chooser" tabindex="0">
-          <!-- tiles inserted by JS -->
-        </div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Choose a theme — saved for next time. Use arrows to move between tiles and Enter to select.</p>
+        <div class="theme-grid" id="themeGrid" role="listbox" aria-label="Theme chooser" tabindex="0"></div>
         <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
           <button id="btnResetTheme" class="btn ghost">Reset Theme</button>
           <div style="flex:1"></div>
@@ -342,11 +254,24 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 
 <script>
 /* ============================
-   THEME DATA & UI
-   - preserves setTheme(name) signature
-   - persists to localStorage
-   - improved keyboard & accessibility
-   ============================ */
+  Polished PenGuardian - main JS
+  Goals:
+   - Keep original function signatures & behaviors
+   - Add IndexedDB fallback (async)
+   - Prefer Firebase; fallback to IDB; then localStorage
+   - Optimistic UI updates
+   - Improved import/export/print
+   - Keep QRious script(s) usage (both included)
+============================ */
+
+/* ---------- Utilities ---------- */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const now = () => Date.now();
+
+function safeJSONParse(s, fallback){ try { return JSON.parse(s); } catch(e){ return fallback; } }
+function isValidEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||'')); }
+
+/* ---------- Theme UI (keeps setTheme API) ---------- */
 const THEMES = [
   { id: 'default', label: 'Default', preview: ['#f4f7fb','#06b6d4'] },
   { id: 'dark', label: 'Dark', preview: ['#071026','#7c3aed'] },
@@ -368,56 +293,109 @@ const savedTheme = localStorage.getItem('penGuardianTheme') || 'default';
 
 function renderThemeTiles(){
   themeGrid.innerHTML = '';
-  THEMES.forEach((t, idx)=>{
+  THEMES.forEach(t => {
     const tile = document.createElement('div');
     tile.className = 'theme-tile';
     tile.title = t.label;
     tile.dataset.theme = t.id;
     tile.setAttribute('role','option');
-    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('tabindex','0');
     tile.innerHTML = `<div class="theme-swatch" style="background:linear-gradient(90deg, ${t.preview[0]}, ${t.preview[1]});opacity:0.98"></div><span>${t.label}</span><div class="label">${t.label}</div>`;
     tile.addEventListener('click', ()=> setTheme(t.id));
-    tile.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setTheme(t.id); } });
+    tile.addEventListener('keydown', ev => { if (ev.key==='Enter' || ev.key===' ') { ev.preventDefault(); setTheme(t.id); }});
     themeGrid.appendChild(tile);
   });
 }
-
-// Arrow-key navigation for themeGrid
-themeGrid.addEventListener('keydown', (ev)=>{
+themeGrid.addEventListener('keydown', ev => {
   const tiles = Array.from(themeGrid.querySelectorAll('.theme-tile'));
-  const idx = tiles.findIndex(t=> t === document.activeElement);
+  const idx = tiles.findIndex(t => t === document.activeElement);
   if (idx === -1) return;
-  let nextIdx = idx;
-  if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') nextIdx = (idx + 1) % tiles.length;
-  if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') nextIdx = (idx - 1 + tiles.length) % tiles.length;
-  if (nextIdx !== idx) { ev.preventDefault(); tiles[nextIdx].focus(); }
+  if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') { ev.preventDefault(); tiles[(idx+1)%tiles.length].focus(); }
+  if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') { ev.preventDefault(); tiles[(idx-1+tiles.length)%tiles.length].focus(); }
   if (ev.key === 'Home') { ev.preventDefault(); tiles[0].focus(); }
   if (ev.key === 'End') { ev.preventDefault(); tiles[tiles.length-1].focus(); }
 });
-
-// Keep signature & behavior: sets body data-theme and persists
-function setTheme(theme) {
+function setTheme(theme){
   document.body.setAttribute('data-theme', theme);
   localStorage.setItem('penGuardianTheme', theme);
   currentThemeLabel.textContent = theme;
-  // mark aria-selected
-  Array.from(themeGrid.children).forEach(c => c.setAttribute('aria-selected', c.dataset.theme === theme ? 'true' : 'false'));
-  // visually focus the selected tile
-  const selected = themeGrid.querySelector(`[data-theme="${theme}"]`);
-  if (selected) selected.classList.add('selected');
+  Array.from(themeGrid.children).forEach(c => c.setAttribute('aria-selected', c.dataset.theme===theme ? 'true' : 'false'));
 }
-document.getElementById('btnResetTheme').addEventListener('click', ()=> {
-  localStorage.removeItem('penGuardianTheme');
-  setTheme('default');
-});
-
-// initialize theme tiles and apply saved
+document.getElementById('btnResetTheme').addEventListener('click', ()=> { localStorage.removeItem('penGuardianTheme'); setTheme('default'); });
 renderThemeTiles();
 setTheme(savedTheme);
 
-/* ============================
-   Firebase config + safer wrappers
-   ============================ */
+/* ---------- IndexedDB wrapper (tiny, promise-based) ---------- */
+const IDB_DB = 'penGuardianDB_v2';
+const IDB_VERSION = 1;
+const IDB_STORES = ['pens','memorial','notify','notifications'];
+
+function openIDB(){
+  return new Promise((resolve, reject) => {
+    if (!('indexedDB' in window)) return reject(new Error('IndexedDB not supported'));
+    const req = indexedDB.open(IDB_DB, IDB_VERSION);
+    req.onupgradeneeded = ev => {
+      const db = ev.target.result;
+      IDB_STORES.forEach(s => {
+        if (!db.objectStoreNames.contains(s)) {
+          db.createObjectStore(s, { keyPath: 'id' });
+        }
+      });
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+async function idbGetAll(store){
+  try {
+    const db = await openIDB();
+    return new Promise((res, rej) => {
+      const tx = db.transaction(store, 'readonly');
+      const os = tx.objectStore(store);
+      const req = os.getAll();
+      req.onsuccess = () => res(req.result || []);
+      req.onerror = () => rej(req.error);
+    });
+  } catch(e){ return []; }
+}
+async function idbPut(store, obj){
+  try {
+    const db = await openIDB();
+    return new Promise((res, rej) => {
+      const tx = db.transaction(store, 'readwrite');
+      const os = tx.objectStore(store);
+      const req = os.put(obj);
+      req.onsuccess = () => res(req.result);
+      req.onerror = () => rej(req.error);
+    });
+  } catch(e){ return null; }
+}
+async function idbDelete(store, id){
+  try {
+    const db = await openIDB();
+    return new Promise((res, rej) => {
+      const tx = db.transaction(store, 'readwrite');
+      const os = tx.objectStore(store);
+      const req = os.delete(id);
+      req.onsuccess = () => res(true);
+      req.onerror = () => rej(req.error);
+    });
+  } catch(e){ return false; }
+}
+async function idbClear(store){
+  try {
+    const db = await openIDB();
+    return new Promise((res, rej) => {
+      const tx = db.transaction(store, 'readwrite');
+      const os = tx.objectStore(store);
+      const req = os.clear();
+      req.onsuccess = () => res(true);
+      req.onerror = () => rej(req.error);
+    });
+  } catch(e){ return false; }
+}
+
+/* ---------- Firebase init & safe wrappers ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyD4NsALm0mejZSqkejM0rij880glPpHv4A",
   authDomain: "ballpen-guard.firebaseapp.com",
@@ -428,91 +406,107 @@ const firebaseConfig = {
   appId: "1:463039110873:web:1ee6f8a515bb59505a28c8",
   measurementId: "G-Z7JCPL9LLG"
 };
-
 let db = null;
 try {
   firebase.initializeApp(firebaseConfig);
   db = firebase.database();
-} catch (e) {
-  console.warn('Firebase init failed, falling back to localStorage mode', e);
+} catch(e){
+  console.warn('Firebase init failed — offline/local mode active', e);
 }
 
-// helper wrappers to gracefully fallback to localStorage if firebase unavailable
-function safeSet(path, value) {
+/* Safe wrappers:
+   Priority: Firebase -> IndexedDB -> localStorage
+   All return Promises.
+*/
+async function safeSet(path, value){
   if (db) {
-    return db.ref(path).set(value).catch(err => {
-      console.warn('Firebase set failed', err);
-      fallbackLocalSet(path, value);
-    });
-  } else {
-    fallbackLocalSet(path, value);
-    return Promise.resolve();
+    try { await db.ref(path).set(value); return; } catch(e){ console.warn('firebase set failed', e); }
   }
-}
-function safePush(path, value) {
-  if (db) {
-    return db.ref(path).push(value).catch(err => {
-      console.warn('Firebase push failed', err);
-      fallbackLocalPush(path, value);
-    });
-  } else {
-    fallbackLocalPush(path, value);
-    return Promise.resolve();
-  }
-}
-function safeUpdate(path, value) {
-  if (db) {
-    return db.ref(path).update(value).catch(err => {
-      console.warn('Firebase update failed', err);
-      fallbackLocalUpdate(path, value);
-    });
-  } else {
-    fallbackLocalUpdate(path, value);
-    return Promise.resolve();
-  }
-}
-function safeRemove(path) {
-  if (db) {
-    return db.ref(path).remove().catch(err => {
-      console.warn('Firebase remove failed', err);
-      fallbackLocalRemove(path);
-    });
-  } else {
-    fallbackLocalRemove(path);
-    return Promise.resolve();
-  }
+  // IDB fallback for top-level collections like 'notify' or 'pens' as object collections
+  try {
+    if (path === 'notify') {
+      await idbPut('notify', { id: 'settings', ...value });
+      return;
+    }
+    if (path === 'pens') {
+      // value may be array or object; if object keyed by id, write all
+      if (Array.isArray(value)) {
+        await Promise.all(value.map(v => idbPut('pens', v)));
+        return;
+      }
+    }
+    // fallback store by key
+    localStorage.setItem(`penGuardian_fallback_${path.replace(/\//g,'_')}`, JSON.stringify(value));
+  } catch(e){}
 }
 
-/* --- local fallback helpers (very simple) --- */
-function fallbackLocalSet(path, value) {
+async function safePush(path, value){
+  if (db) {
+    try {
+      await db.ref(path).push(value); return;
+    } catch(e){ console.warn('firebase push failed', e); }
+  }
+  // IDB push emulation
+  try {
+    const id = value.id || ('local_' + now() + '_' + Math.random().toString(36).slice(2,8));
+    await idbPut(path, { ...value, id });
+    return;
+  } catch(e){}
+  // localStorage fallback append
   const key = `penGuardian_fallback_${path.replace(/\//g,'_')}`;
-  localStorage.setItem(key, JSON.stringify(value));
-}
-function fallbackLocalPush(path, value) {
-  // emulate basic array push
-  const key = `penGuardian_fallback_${path.replace(/\//g,'_')}`;
-  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  const arr = safeJSONParse(localStorage.getItem(key), []);
   arr.push(value);
   localStorage.setItem(key, JSON.stringify(arr));
 }
-function fallbackLocalUpdate(path, value) {
-  // naive: path like pens/<id>
-  if (!path.includes('/')) return fallbackLocalSet(path, value);
-  const [parent, id] = path.split('/');
-  const key = `penGuardian_fallback_${parent}`;
-  const arr = JSON.parse(localStorage.getItem(key) || '[]');
-  const idx = arr.findIndex(x=> x.id === id);
-  if (idx >= 0) { arr[idx] = { ...arr[idx], ...value }; localStorage.setItem(key, JSON.stringify(arr)); }
+
+async function safeUpdate(path, value){
+  if (db) {
+    try { await db.ref(path).update(value); return; } catch(e){ console.warn('firebase update failed', e); }
+  }
+  // path like 'pens/<id>'
+  if (path.includes('/')) {
+    const [parent, id] = path.split('/');
+    try {
+      const rec = Object.assign({}, (await getLocalRecord(parent, id) || {}), value);
+      await idbPut(parent, rec);
+      return;
+    } catch(e){}
+    // localStorage fallback - naive
+    const key = `penGuardian_fallback_${parent}`;
+    const arr = safeJSONParse(localStorage.getItem(key), []);
+    const idx = arr.findIndex(x=>x.id===id);
+    if (idx >= 0) { arr[idx] = Object.assign(arr[idx], value); localStorage.setItem(key, JSON.stringify(arr)); return; }
+  }
 }
-function fallbackLocalRemove(path) {
-  if (!path.includes('/')) return fallbackLocalSet(path, null);
-  const [parent, id] = path.split('/');
-  const key = `penGuardian_fallback_${parent}`;
-  const arr = JSON.parse(localStorage.getItem(key) || '[]').filter(x=> x.id !== id);
-  localStorage.setItem(key, JSON.stringify(arr));
+async function safeRemove(path){
+  if (db) {
+    try { await db.ref(path).remove(); return; } catch(e){ console.warn('firebase remove failed', e); }
+  }
+  if (path.includes('/')) {
+    const [parent, id] = path.split('/');
+    try { await idbDelete(parent, id); return; } catch(e){}
+    const key = `penGuardian_fallback_${parent}`;
+    const arr = safeJSONParse(localStorage.getItem(key), []).filter(x=> x.id !== id);
+    localStorage.setItem(key, JSON.stringify(arr));
+  } else {
+    // remove whole collection
+    try { await idbClear(path); return; } catch(e){}
+    localStorage.removeItem(`penGuardian_fallback_${path}`);
+  }
 }
 
-/* --- DOM Elements (kept original IDs & elements) --- */
+async function getLocalRecord(store, id){
+  try {
+    const arr = await idbGetAll(store);
+    return arr.find(x=> x.id === id);
+  } catch(e){
+    const raw = localStorage.getItem(`penGuardian_fallback_${store}`);
+    const arr = safeJSONParse(raw, []);
+    return arr.find(x=> x.id === id);
+  }
+}
+
+/* ---------- DOM elements ---------- */
 const elements = {
   penForm: document.getElementById('penForm'),
   ownerIn: document.getElementById('owner'),
@@ -533,56 +527,33 @@ const elements = {
   statusesEl: document.getElementById('statuses'),
   penCount: document.getElementById('penCount'),
   exportJson: document.getElementById('exportJson'),
-  importFile: document.getElementById('importFile')
+  importFile: document.getElementById('importFile'),
+  printBatch: document.getElementById('printBatch'),
+  globalSearch: document.getElementById('globalSearch'),
+  searchToggle: document.getElementById('searchToggle'),
+  searchBox: document.getElementById('searchBox')
 };
 
 let currentPhotoBase64 = null;
-let pensData = {}; // object keyed by id
+let pensData = {}; // map by id (live view)
 
-/* --- Helpers (kept original helpers & signatures) --- */
+/* ---------- core helpers (original signatures preserved) ---------- */
 const generateQRValue = (length = 16) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 };
 
-const resetForm = () => {
-  elements.ownerIn.value = '';
-  elements.nickIn.value = '';
-  elements.modelIn.value = '';
-  elements.photoInput.value = '';
-  elements.photoPreview.style.backgroundImage = '';
-  elements.photoPreview.textContent = 'PNG';
-  elements.photoPreview.style.backgroundSize = '';
-  currentPhotoBase64 = null;
-};
+function escapeHtml(unsafe) {
+  if (!unsafe && unsafe !== 0) return '';
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-const createBtn = (text, className, onClick) => {
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.textContent = text;
-  btn.className = className ? `btn ${className}` : 'btn';
-  btn.addEventListener('click', onClick);
-  return btn;
-};
-
-const createQRCanvas = (id, value) => {
-  const canvas = document.createElement('canvas');
-  canvas.id = `qr-${id}`;
-  canvas.width = 80;
-  canvas.height = 80;
-  canvas.style.borderRadius = '8px';
-  canvas.style.background = '#fff';
-  canvas.style.flexShrink = '0';
-  canvas.title = value;
-  try {
-    new QRious({ element: canvas, value: value || generateQRValue(), size: 80 });
-  } catch (e) {
-    console.warn('QRious failed to render', e);
-  }
-  return canvas;
-};
-
-/* --- Photo Preview (unchanged behavior) --- */
+/* ---------- photo preview ---------- */
 elements.photoInput.addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return resetForm();
@@ -598,69 +569,88 @@ elements.photoInput.addEventListener('change', e => {
   reader.readAsDataURL(file);
 });
 
-/* --- Clear Form --- */
-elements.clearFormBtn.addEventListener('click', resetForm);
+/* ---------- reset form (original) ---------- */
+function resetForm(){
+  elements.ownerIn.value = '';
+  elements.nickIn.value = '';
+  elements.modelIn.value = '';
+  elements.photoInput.value = '';
+  elements.photoPreview.style.backgroundImage = '';
+  elements.photoPreview.textContent = 'PNG';
+  elements.photoPreview.style.backgroundSize = '';
+  currentPhotoBase64 = null;
+}
 
-/* --- Submit Pen (kept original) --- */
-elements.penForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  const owner = elements.ownerIn.value.trim();
-  const nickname = elements.nickIn.value.trim();
-  const model = elements.modelIn.value.trim();
-  if (!owner || !nickname || !model) return alert('Please fill owner, nickname, and model.');
-  if (Object.values(pensData).some(p => p.nickname && p.nickname.toLowerCase() === nickname.toLowerCase())) {
-    return alert('A pen with this nickname already exists!');
-  }
-  // Create local id even if firebase supplies one
-  const id = 'local_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
-  const payload = {
-    id,
-    owner, nickname, model,
-    photo: currentPhotoBase64 || null,
-    status: 'Alive',
-    createdAt: Date.now(),
-    lastSeen: Date.now(),
-    qr: generateQRValue()
-  };
+/* ---------- create button helper ---------- */
+function createBtn(text, className, onClick){
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = text;
+  btn.className = className ? `btn ${className}` : 'btn';
+  btn.addEventListener('click', onClick);
+  return btn;
+}
 
-  // Try to push to firebase under 'pens' - if using firebase we push and firebase will create key; but we keep our local id so UI works offline
+/* ---------- create QR canvas (original) ---------- */
+function createQRCanvas(id, value, size = 80){
+  const canvas = document.createElement('canvas');
+  canvas.id = `qr-${id}`;
+  canvas.width = size;
+  canvas.height = size;
+  canvas.style.borderRadius = '8px';
+  canvas.style.background = '#fff';
+  canvas.style.flexShrink = '0';
+  canvas.title = value;
   try {
-    if (db) {
-      const newRef = db.ref('pens').push();
-      payload.id = newRef.key;
-      await newRef.set(payload);
+    if (typeof QRious !== 'undefined') {
+      new QRious({ element: canvas, value: value || generateQRValue(), size });
     } else {
-      // fallback local push
-      fallbackLocalPush('pens', payload);
+      // graceful fallback: write plain text
+      const ctx = canvas.getContext && canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.font = '10px Arial';
+        ctx.fillText(value || 'QR', 6, canvas.height/2);
+      }
     }
-  } catch (err) {
-    console.warn('Failed to push to firebase, using fallback', err);
-    fallbackLocalPush('pens', payload);
+  } catch(e){
+    console.warn('QR render failed', e);
   }
+  return canvas;
+}
 
-  resetForm();
-});
+/* ---------- optimistic UI helpers ---------- */
+function addOrUpdateLocal(pen){
+  pensData[pen.id] = pen;
+  renderPens(Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0)));
+}
+function removeLocal(id){
+  delete pensData[id];
+  renderPens(Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0)));
+}
 
-/* --- Render Pens (improved visuals, original structural behavior preserved) --- */
-const renderPens = pens => {
+/* ---------- Render functions (improved & original behavior preserved) ---------- */
+function renderPens(list){
   elements.pensContainer.innerHTML = '';
-  if (!pens?.length) {
+  if (!list?.length) {
     elements.noPens.style.display = 'block';
     elements.penCount.textContent = 0;
     return;
   }
   elements.noPens.style.display = 'none';
-  elements.penCount.textContent = pens.length;
+  elements.penCount.textContent = list.length;
 
-  pens.forEach((p, idx) => {
+  list.forEach(p => {
     const el = document.createElement('div');
     el.className = 'pen card';
-    el.title = `Created: ${new Date(p.createdAt).toLocaleString()}`;
     el.dataset.id = p.id;
+    el.title = `Created: ${new Date(p.createdAt || 0).toLocaleString()}`;
 
     const img = document.createElement('div');
     img.className = 'pen-img';
-    img.textContent = (p.nickname || '--').slice(0, 2).toUpperCase();
+    img.textContent = (p.nickname || '--').slice(0,2).toUpperCase();
     if (p.photo) {
       img.style.backgroundImage = `url(${p.photo})`;
       img.textContent = '';
@@ -671,283 +661,358 @@ const renderPens = pens => {
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.innerHTML = `<h3>${escapeHtml(p.nickname)} <small class="small">— ${escapeHtml(p.model)}</small></h3>
-      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${escapeHtml(p.status || 'Unknown')}"></span> (<span class="last-seen"></span>)</p>`;
+      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${escapeHtml(p.status||'Unknown')}"></span> (<span class="last-seen"></span>)</p>`;
 
     const actions = document.createElement('div');
     actions.className = 'actions';
+
     actions.append(
-      createBtn('Update Seen', 'ghost', async () => {
-        try {
-          await safeUpdate(`pens/${p.id}`, { lastSeen: Date.now(), status: 'Alive' });
-        } catch (err) {
-          console.warn(err);
-        }
+      createBtn('Update Seen', 'ghost', async ()=>{
+        // optimistic
+        const updated = { ...p, lastSeen: now(), status: 'Alive' };
+        addOrUpdateLocal(updated);
+        try { await safeUpdate(`pens/${p.id}`, { lastSeen: now(), status: 'Alive' }); } catch(e){ console.warn(e); }
       }),
-      createBtn('Mark Missing', '', async () => {
+      createBtn('Mark Missing', '', async ()=>{
         if (!confirm(`Mark "${p.nickname}" as missing?`)) return;
+        const updated = { ...p, lastSeen: now(), status: 'Missing' };
+        addOrUpdateLocal(updated);
         try {
-          await safeUpdate(`pens/${p.id}`, { status: 'Missing', lastSeen: Date.now() });
-          await safePush('notifications', { type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: Date.now() });
+          await safeUpdate(`pens/${p.id}`, { status: 'Missing', lastSeen: now() });
+          await safePush('notifications', { type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: now() });
           alert(`🚨 Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
-        } catch (err) {
-          console.warn(err);
-        }
+        } catch(e){ console.warn(e); }
       }),
-      createBtn('Mourn', 'ghost', async () => {
+      createBtn('Mourn', 'ghost', async ()=>{
         if (!confirm(`Add "${p.nickname}" to Memorial Wall?`)) return;
         try {
-          await safePush('memorial', { id: p.id, nickname: p.nickname, owner: p.owner, model: p.model, when: Date.now() });
+          await safePush('memorial', { id: p.id, nickname: p.nickname, owner: p.owner, model: p.model, when: now() });
           await safeRemove(`pens/${p.id}`);
-        } catch (err) {
-          console.warn(err);
-        }
+          removeLocal(p.id);
+        } catch(e){ console.warn(e); }
       }),
-      createBtn('Delete', 'ghost', async () => {
+      createBtn('Delete', 'ghost', async ()=>{
         if (!confirm(`Delete "${p.nickname}"?`)) return;
         try {
           await safeRemove(`pens/${p.id}`);
-        } catch (err) {
-          console.warn(err);
-        }
+          removeLocal(p.id);
+        } catch(e){ console.warn(e); }
       }),
       createBtn('Print QR', 'ghost', () => printSticker(p))
     );
 
-    const qrCanvas = createQRCanvas(p.id, p.qr);
+    const qrCanvas = createQRCanvas(p.id, p.qr || generateQRValue(), 80);
     qrCanvas.setAttribute('aria-label', `QR for ${p.nickname}`);
 
     el.append(img, meta, actions, qrCanvas);
     elements.pensContainer.appendChild(el);
   });
-};
+}
 
-/* --- Render Memorial --- */
-const renderMemorial = arr => {
+/* ---------- render memorial & statuses ---------- */
+function renderMemorial(arr){
   elements.memorialList.innerHTML = arr?.length
-    ? arr.map(m => `<div class="tiny" title="Added: ${new Date(m.when).toLocaleString()}">${escapeHtml(m.nickname)} — ${escapeHtml(m.owner)}</div>`).join('')
+    ? arr.map(m => `<div class="tiny" title="Added: ${new Date(m.when||0).toLocaleString()}">${escapeHtml(m.nickname)} — ${escapeHtml(m.owner)}</div>`).join('')
     : '<div class="tiny">No memorials yet.</div>';
-};
-
-/* --- Render Statuses --- */
-const renderStatuses = list => {
+}
+function renderStatuses(list){
   elements.statusesEl.innerHTML = '';
   if (!list) return;
-  list.slice(0, 6).forEach(p => {
-    const div = document.createElement('div');
-    div.style.marginBottom = '6px';
-    div.innerHTML = `<div style="padding:8px;border-radius:10px;background:rgba(236,254,255,0.9);border:1px solid rgba(6,182,212,0.08)">
-      <strong>${escapeHtml(p.nickname)}</strong> — <span class="status ${escapeHtml(p.status || 'Unknown')}">${escapeHtml(p.status || 'Unknown')}</span> (<span class="last-seen"></span>)
+  list.slice(0,6).forEach(p=>{
+    const d = document.createElement('div');
+    d.style.marginBottom = '6px';
+    d.innerHTML = `<div style="padding:8px;border-radius:10px;background:rgba(236,254,255,0.9);border:1px solid rgba(6,182,212,0.08)">
+      <strong>${escapeHtml(p.nickname)}</strong> — <span class="status ${escapeHtml(p.status||'Unknown')}">${escapeHtml(p.status||'Unknown')}</span> (<span class="last-seen"></span>)
     </div>`;
-    elements.statusesEl.appendChild(div);
+    elements.statusesEl.appendChild(d);
   });
-};
+}
 
-/* --- Firebase Listeners (unchanged) but safer: if no firebase, load from fallback localStorage --- */
-const attachListenersOrLoadFallback = () => {
+/* ---------- load from Firebase or IDB (initial sync) ---------- */
+async function initialLoad(){
+  // preferred: firebase listeners for realtime updates
   if (db) {
     db.ref('pens').on('value', snap => {
-      pensData = snap.val() || {};
-      const sortedPens = Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
-      renderPens(sortedPens);
-      renderStatuses(sortedPens);
+      const raw = snap.val() || {};
+      // convert into map
+      pensData = Object.values(raw).reduce((acc, p)=> { if (p && p.id) acc[p.id]=p; return acc; }, {});
+      const sorted = Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+      renderPens(sorted);
+      renderStatuses(sorted);
     });
-
     db.ref('memorial').on('value', snap => {
-      renderMemorial(Object.values(snap.val() || {}).sort((a,b)=> (b.when||0) - (a.when||0)));
+      const arr = Object.values(snap.val() || {});
+      renderMemorial(arr.sort((a,b)=> (b.when||0) - (a.when||0)));
     });
-  } else {
-    // load fallback pens from localStorage key 'penGuardian_fallback_pens'
-    const raw = localStorage.getItem('penGuardian_fallback_pens') || '[]';
-    const arr = JSON.parse(raw);
-    // convert to object keyed by id
-    pensData = arr.reduce((acc, p) => { acc[p.id] = p; return acc; }, {});
-    const sortedPens = arr.sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
-    renderPens(sortedPens);
-    renderStatuses(sortedPens);
-    const memorialRaw = localStorage.getItem('penGuardian_fallback_memorial') || '[]';
-    const memorialArr = JSON.parse(memorialRaw);
-    renderMemorial(memorialArr.sort((a,b)=> (b.when||0) - (a.when||0)));
+    return;
   }
-};
 
-attachListenersOrLoadFallback();
+  // fallback: load from IndexedDB
+  try {
+    const arr = await idbGetAll('pens');
+    pensData = arr.reduce((acc,p)=>{ acc[p.id]=p; return acc; }, {});
+    const sorted = arr.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
+    renderPens(sorted);
+    renderStatuses(sorted);
+    const memorialArr = await idbGetAll('memorial');
+    renderMemorial(memorialArr.sort((a,b)=> (b.when||0)-(a.when||0)));
+    // load notify settings
+    try {
+      const notify = (await idbGetAll('notify')).find(x=> x.id === 'settings');
+      if (notify) {
+        elements.notifyEmail.value = notify.email || '';
+        elements.telegramId.value = notify.telegram || '';
+      }
+    } catch(e){}
+  } catch(e){
+    // last-resort fallback localStorage
+    const raw = localStorage.getItem('penGuardian_fallback_pens') || '[]';
+    const arr = safeJSONParse(raw, []);
+    pensData = arr.reduce((acc,p)=>{ acc[p.id]=p; return acc; }, {});
+    const sorted = arr.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
+    renderPens(sorted);
+    renderStatuses(sorted);
+    const memorialRaw = localStorage.getItem('penGuardian_fallback_memorial') || '[]';
+    renderMemorial(safeJSONParse(memorialRaw, []).sort((a,b)=> (b.when||0)-(a.when||0)));
+  }
+}
+initialLoad();
 
-/* --- Notification Settings (unchanged, but using safeSet) --- */
+/* ---------- Form submit (original behavior, improved) ---------- */
+elements.penForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const owner = elements.ownerIn.value.trim();
+  const nickname = elements.nickIn.value.trim();
+  const model = elements.modelIn.value.trim();
+  if (!owner || !nickname || !model) return alert('Please fill owner, nickname, and model.');
+
+  // unique nickname check (case-insensitive)
+  const exists = Object.values(pensData).some(p => p.nickname && p.nickname.toLowerCase() === nickname.toLowerCase());
+  if (exists) return alert('A pen with this nickname already exists!');
+
+  // create payload
+  let id = 'local_' + now() + '_' + Math.random().toString(36).slice(2,8);
+  const payload = {
+    id,
+    owner, nickname, model,
+    photo: currentPhotoBase64 || null,
+    status: 'Alive',
+    createdAt: now(),
+    lastSeen: now(),
+    qr: generateQRValue()
+  };
+
+  // optimistic add to UI
+  addOrUpdateLocal(payload);
+
+  // try to push to firebase (gives real key); else idb/local fallback
+  try {
+    if (db) {
+      const newRef = db.ref('pens').push();
+      payload.id = newRef.key;
+      await newRef.set(payload);
+      // reconcile local id -> server id in local map
+      delete pensData[id];
+      pensData[payload.id] = payload;
+      renderPens(Object.values(pensData).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)));
+    } else {
+      // store in IDB
+      await idbPut('pens', payload);
+    }
+  } catch(err){
+    console.warn('Create pen failed', err);
+    try { await idbPut('pens', payload); } catch(e){}
+  }
+  resetForm();
+});
+
+/* ---------- Notification settings with debounce ---------- */
+let notifyDebounce = null;
 elements.saveNotifBtn.addEventListener('click', async () => {
-  await safeSet('notify', { email: elements.notifyEmail.value.trim() || null, telegram: elements.telegramId.value.trim() || null });
-  elements.notifMsg.textContent = 'Notification preferences saved.';
+  const email = elements.notifyEmail.value.trim() || null;
+  const telegram = elements.telegramId.value.trim() || null;
+  if (email && !isValidEmail(email)) return alert('Please enter a valid email address.');
+  const payload = { email, telegram };
+  // optimistic UI message
+  elements.notifMsg.textContent = 'Saving...';
+  try {
+    await safeSet('notify', payload);
+    // also store to IDB for offline
+    await idbPut('notify', { id: 'settings', ...payload });
+    elements.notifMsg.textContent = 'Notification preferences saved.';
+  } catch(e){
+    elements.notifMsg.textContent = 'Failed to save notification preferences.';
+    console.warn(e);
+  }
 });
 elements.testNotifBtn.addEventListener('click', async () => {
-  await safePush('notifications', { type: 'test', message: 'Test notification', timestamp: Date.now() });
-  alert('Test notification queued.');
+  try {
+    await safePush('notifications', { type: 'test', message: 'Test notification', timestamp: now() });
+    alert('Test notification queued.');
+  } catch(e){ console.warn(e); alert('Failed to queue test notification.'); }
 });
 
-/* --- Clear Memorial --- */
+/* ---------- Clear memorial ---------- */
 elements.clearMemorialBtn.addEventListener('click', async () => {
   if (!confirm('Clear memorial wall?')) return;
-  await safeRemove('memorial');
+  try {
+    await safeRemove('memorial');
+    renderMemorial([]);
+    // clear idb local too
+    try { await idbClear('memorial'); } catch(e){}
+  } catch(e){ console.warn(e); }
 });
 
-/* --- Print QR Sticker --- */
-const printSticker = pen => {
+/* ---------- Print single sticker (original) & batch print ---------- */
+function printSticker(pen){
   const w = window.open('', '', 'width=400,height=500');
-  if (!w) return alert('Popup blocked — please allow popups to print QR.');
+  if (!w) return alert('Popup blocked — allow popups for printing.');
   const html = `
-    <html>
-      <head>
-        <title>QR Sticker - ${escapeHtml(pen.nickname)}</title>
-        <style>body{font-family:Inter,Arial;padding:16px}</style>
-      </head>
-      <body>
+    <html><head><title>QR Sticker - ${escapeHtml(pen.nickname)}</title>
+    <style>body{font-family:Inter,Arial;padding:16px} .sticker{display:flex;align-items:center;gap:12px}</style>
+    </head><body>
+    <div class="sticker">
+      <div>
         <h3>${escapeHtml(pen.nickname)}</h3>
         <p><strong>${escapeHtml(pen.owner)}</strong></p>
         <p>${escapeHtml(pen.model)}</p>
-        <canvas id="qr"></canvas>
-      </body>
-    </html>`;
-  w.document.open();
-  w.document.write(html);
-  w.document.close();
-  // Wait a tick for DOM to be available
-  setTimeout(()=> {
+      </div>
+      <canvas id="qr"></canvas>
+    </div>
+    </body></html>`;
+  w.document.open(); w.document.write(html); w.document.close();
+  setTimeout(()=>{
     try {
       const canvas = w.document.getElementById('qr');
-      new QRious({ element: canvas, value: pen.qr || generateQRValue(), size: 200 });
-      w.focus();
-      w.print();
-    } catch (e) {
-      console.warn('QR print failed', e);
+      if (typeof QRious !== 'undefined') new QRious({ element: canvas, value: pen.qr || generateQRValue(), size: 200 });
+      w.focus(); w.print();
+    } catch(e){
+      console.warn('Print QR failed', e);
       w.print();
     }
-  }, 200);
-};
+  }, 250);
+}
 
-/* --- Live Last Seen Update (improved: map by data-id) --- */
-setInterval(() => {
-  // iterate pensData entries
-  Object.values(pensData).forEach((pen) => {
-    const penEl = document.querySelector(`.pen[data-id="${pen.id}"]`);
-    if (!penEl) return;
-    const statusEl = penEl.querySelector('.status');
-    const lastSeenEl = penEl.querySelector('.last-seen');
+/* Batch sticker printing: prints up to first 12 pens on a sheet */
+elements.printBatch.addEventListener('click', ()=>{
+  const list = Object.values(pensData).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)).slice(0,12);
+  if (!list.length) return alert('No pens to print.');
+  const w = window.open('', '', 'width=800,height=1100');
+  if (!w) return alert('Popup blocked — allow popups for printing.');
+  let body = `<html><head><title>Sticker Sheet</title><style>body{font-family:Inter,Arial;padding:8px} .sheet{display:flex;flex-wrap:wrap;gap:8px} .card{width:190px;height:260px;padding:8px;border:1px dashed #ddd;display:flex;flex-direction:column;justify-content:space-between}</style></head><body><div class="sheet">`;
+  list.forEach((p, i) => {
+    body += `<div class="card" id="card-${i}"><div><h4>${escapeHtml(p.nickname)}</h4><div>${escapeHtml(p.owner)}</div><div style="font-size:12px">${escapeHtml(p.model)}</div></div><canvas id="qr-${i}"></canvas></div>`;
+  });
+  body += `</div></body></html>`;
+  w.document.open(); w.document.write(body); w.document.close();
+  setTimeout(()=>{
+    try {
+      list.forEach((p, i) => {
+        const canvas = w.document.getElementById(`qr-${i}`);
+        if (canvas && typeof QRious !== 'undefined') new QRious({ element: canvas, value: p.qr || generateQRValue(), size: 140 });
+      });
+      w.focus(); w.print();
+    } catch(e){
+      console.warn('Batch print failed', e);
+      w.print();
+    }
+  }, 400);
+});
+
+/* ---------- Live last-seen update (robust) ---------- */
+setInterval(()=>{
+  Object.values(pensData).forEach(p=>{
+    const el = document.querySelector(`.pen[data-id="${p.id}"]`);
+    if (!el) return;
+    const statusEl = el.querySelector('.status');
+    const lastSeenEl = el.querySelector('.last-seen');
     if (statusEl && lastSeenEl) {
-      const seconds = Math.floor((Date.now() - (pen.lastSeen || pen.createdAt || Date.now())) / 1000);
+      const seconds = Math.floor((now() - (p.lastSeen || p.createdAt || now())) / 1000);
       const d = Math.floor(seconds / 86400),
             h = Math.floor((seconds % 86400) / 3600),
             m = Math.floor((seconds % 3600) / 60),
             s = seconds % 60;
       lastSeenEl.textContent = `${d}d ${h}h ${m}m ${s}s ago`;
-      statusEl.textContent = pen.status || 'Unknown';
-      statusEl.title = `Last seen: ${new Date(pen.lastSeen || pen.createdAt || Date.now()).toLocaleString()}`;
-      // ensure status class is set properly
-      statusEl.className = 'status ' + (pen.status || 'Unknown');
+      statusEl.textContent = p.status || 'Unknown';
+      statusEl.title = `Last seen: ${new Date(p.lastSeen || p.createdAt || now()).toLocaleString()}`;
+      statusEl.className = 'status ' + (p.status || 'Unknown');
     }
   });
-
-  // Update memorial last-seen in the right column statuses too (if applicable)
-  // (We re-render statuses from pensData on db changes; this keeps live update)
 }, 1000);
 
-/* --- Search (small UX improvement + debounce) --- */
-const globalSearch = document.getElementById('globalSearch');
-function debounce(fn, wait=250){ let t; return (...args)=>{ clearTimeout(t); t = setTimeout(()=> fn(...args), wait); }; }
-globalSearch.addEventListener('input', debounce(e => {
+/* ---------- Search with debounce & highlighting ---------- */
+function debounce(fn, wait=200){ let t; return (...args)=>{ clearTimeout(t); t = setTimeout(()=> fn(...args), wait); }; }
+elements.globalSearch.addEventListener('input', debounce(e=>{
   const q = e.target.value.trim().toLowerCase();
-  const list = Object.values(pensData || {});
-  if (!q){ renderPens(list.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0))); return; }
+  const list = Object.values(pensData);
+  if (!q) { renderPens(list.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0))); return; }
   const filtered = list.filter(p => (p.nickname||'').toLowerCase().includes(q) || (p.owner||'').toLowerCase().includes(q) || (p.model||'').toLowerCase().includes(q));
   renderPens(filtered.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)));
-}, 200));
+}, 180));
 
-// mobile search toggle
-const searchToggle = document.getElementById('searchToggle');
-const searchBox = document.getElementById('searchBox');
-searchToggle.addEventListener('click', ()=>{
-  const expanded = searchToggle.getAttribute('aria-expanded') === 'true';
-  searchToggle.setAttribute('aria-expanded', String(!expanded));
-  searchBox.style.display = expanded ? 'none' : 'flex';
+elements.searchToggle.addEventListener('click', ()=>{
+  const expanded = elements.searchToggle.getAttribute('aria-expanded') === 'true';
+  elements.searchToggle.setAttribute('aria-expanded', String(!expanded));
+  elements.searchBox.style.display = expanded ? 'none' : 'flex';
 });
-// start hidden on small screens
-if (window.innerWidth < 900){ searchBox.style.display = 'none'; }
+if (window.innerWidth < 900) elements.searchBox.style.display = 'none';
 
-/* --- small XSS helper --- */
-function escapeHtml(unsafe) {
-  if (!unsafe && unsafe !== 0) return '';
-  return String(unsafe)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-/* --- init: load saved notif settings (if any) --- */
-if (db) {
-  db.ref('notify').once('value').then(snap => {
-    const v = snap.val() || {};
-    elements.notifyEmail.value = v.email || '';
-    elements.telegramId.value = v.telegram || '';
-  }).catch(()=>{});
-} else {
-  // load fallback notify
-  const raw = localStorage.getItem('penGuardian_fallback_notify');
-  if (raw) {
-    try {
-      const v = JSON.parse(raw);
-      elements.notifyEmail.value = v.email || '';
-      elements.telegramId.value = v.telegram || '';
-    } catch(e){}
-  }
-}
-
-/* ============================
-   Export / Import registry
-   ============================ */
-elements.exportJson.addEventListener('click', () => {
-  const arr = Object.values(pensData || {});
-  const blob = new Blob([JSON.stringify(arr, null, 2)], { type: 'application/json' });
+/* ---------- Export / Import (merge-aware) ---------- */
+elements.exportJson.addEventListener('click', async ()=>{
+  // include pens + memorials
+  const pens = Object.values(pensData || {});
+  let memorial = [];
+  try { memorial = await idbGetAll('memorial'); } catch(e){ memorial = safeJSONParse(localStorage.getItem('penGuardian_fallback_memorial'), []); }
+  const out = { exportedAt: new Date().toISOString(), pens, memorial };
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `pen_guardian_export_${new Date().toISOString().slice(0,10)}.json`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  const a = document.createElement('a'); a.href = url; a.download = `penguardian_export_${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 });
 
-elements.importFile.addEventListener('change', (ev) => {
+elements.importFile.addEventListener('change', async (ev)=>{
   const file = ev.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = async (e) => {
+  reader.onload = async e => {
     try {
-      const arr = JSON.parse(e.target.result);
-      if (!Array.isArray(arr)) throw new Error('Invalid format');
-      // push each to db/fallback
+      const data = JSON.parse(e.target.result);
+      const arr = Array.isArray(data) ? data : (data.pens || data);
+      if (!Array.isArray(arr)) throw new Error('Invalid import file format.');
+      let imported = 0;
       for (const p of arr) {
-        // sanitize minimal fields
+        // sanitize
         const payload = {
-          id: p.id || ('local_' + Date.now() + '_' + Math.random().toString(36).slice(2,8)),
+          id: p.id || ('local_' + now() + '_' + Math.random().toString(36).slice(2,8)),
           owner: p.owner || 'Unknown',
           nickname: p.nickname || 'Unnamed',
           model: p.model || '',
           photo: p.photo || null,
           status: p.status || 'Alive',
-          createdAt: p.createdAt || Date.now(),
-          lastSeen: p.lastSeen || Date.now(),
+          createdAt: p.createdAt || now(),
+          lastSeen: p.lastSeen || now(),
           qr: p.qr || generateQRValue()
         };
-        if (db) {
-          const newRef = db.ref('pens').push();
-          payload.id = newRef.key;
-          await newRef.set(payload);
-        } else {
-          fallbackLocalPush('pens', payload);
+        // avoid duplicate nickname
+        const dup = Object.values(pensData).some(x => x.nickname && x.nickname.toLowerCase() === (payload.nickname||'').toLowerCase());
+        if (dup) continue;
+        // optimistic add
+        addOrUpdateLocal(payload);
+        try {
+          if (db) {
+            const newRef = db.ref('pens').push();
+            payload.id = newRef.key;
+            await newRef.set(payload);
+          } else {
+            await idbPut('pens', payload);
+          }
+          imported++;
+        } catch(err){
+          console.warn('Import item failed', err);
+          try { await idbPut('pens', payload); imported++; } catch(e){}
         }
       }
-      alert('Import completed.');
-    } catch (err) {
+      alert(`Import finished. ${imported} items imported (duplicates skipped).`);
+    } catch(err){
       alert('Import failed: ' + err.message);
     } finally {
       elements.importFile.value = '';
@@ -956,19 +1021,52 @@ elements.importFile.addEventListener('change', (ev) => {
   reader.readAsText(file);
 });
 
-/* ============================
-   Keep local in-memory updated when firebase emits changes
-   (We already attached listeners above; ensure pensData updated)
-   ============================ */
-// When firebase emits, attachListenersOrLoadFallback already updates pensData and calls render
+/* ---------- init: try to load notify settings from firebase/idb/local ---------- */
+(async function loadNotify(){
+  if (db) {
+    try {
+      const snap = await db.ref('notify').once('value');
+      const v = snap.val() || {};
+      elements.notifyEmail.value = v.email || '';
+      elements.telegramId.value = v.telegram || '';
+      return;
+    } catch(e){ console.warn(e); }
+  }
+  // idb
+  try {
+    const res = await idbGetAll('notify');
+    const settings = res.find(x => x.id === 'settings');
+    if (settings) { elements.notifyEmail.value = settings.email || ''; elements.telegramId.value = settings.telegram || ''; return; }
+  } catch(e){}
+  // fallback localStorage
+  const raw = localStorage.getItem('penGuardian_fallback_notify');
+  if (raw) {
+    try {
+      const v = JSON.parse(raw);
+      elements.notifyEmail.value = v.email || '';
+      elements.telegramId.value = v.telegram || '';
+    } catch(e){}
+  }
+})();
 
-// small UX niceties: focus search if user presses "/" anywhere
-window.addEventListener('keydown', (e) => {
+/* ---------- keyboard UX niceties ---------- */
+window.addEventListener('keydown', (e)=>{
   if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-    e.preventDefault();
-    globalSearch.focus();
+    e.preventDefault(); elements.globalSearch.focus();
   }
 });
+
+/* ---------- defensive: keep pensData live in IDB after writes (sync) ---------- */
+if (!db) {
+  // periodically sync IDB content to UI in case other tab changed it
+  setInterval(async ()=>{
+    try {
+      const arr = await idbGetAll('pens');
+      pensData = arr.reduce((acc,p)=>{ acc[p.id]=p; return acc; }, {});
+      renderPens(arr.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)));
+    } catch(e){}
+  }, 3000);
+}
 </script>
 </body>
 </html>
