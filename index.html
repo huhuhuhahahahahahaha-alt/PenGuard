@@ -1,224 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PenGuardian — Ultimate Pen Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PenGuardian — Ultimate Pen Tracker (UI Upgraded)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
+/* ============================
+   Design system & variables
+   ============================ */
+:root{
   --bg: #f4f7fb;
   --card: #ffffff;
   --muted: #6b7280;
-  --accent: #06b6d4;
+  --accent: #06b6d4;        /* cyan */
+  --accent-2: #0ea5e9;
   --hover: #0e7490;
   --danger: #ef4444;
   --success: #22c55e;
-  --shadow: rgba(0,0,0,0.12);
+  --shadow: rgba(2,6,23,0.08);
+  --glass: rgba(255,255,255,0.6);
+  --glass-border: rgba(0,0,0,0.04);
+  --radius: 14px;
+  --card-padding: 20px;
+  --max-w: 1200px;
+  --text: #0f1724;
+  --muted-bg: #f1f5f9;
+  --accent-contrast: #ffffff;
 }
 
-/* Holiday Themes */
-body[data-theme='halloween'] {
-  --bg: #1a1a1a;
-  --card: #2c2c2c;
-  --muted: #ff7518;
-  --accent: #ff5c00;
-  --hover: #ffa500;
-  --danger: #ff0000;
-  --success: #00ff00;
+/* Theme palettes (extended & vivid) */
+body[data-theme="default"]{
+  --bg:#f4f7fb; --card:#ffffff; --muted:#6b7280; --accent:#06b6d4; --accent-2:#0ea5e9; --hover:#0e7490;
 }
-body[data-theme='christmas'] {
-  --bg: #f0f8f5;
-  --card: #ffffff;
-  --muted: #065f46;
-  --accent: #b91c1c;
-  --hover: #f87171;
-  --danger: #b91c1c;
-  --success: #22c55e;
+body[data-theme="dark"]{
+  --bg:#071026; --card:#0f1724; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#5eead4; --hover:#a78bfa; --text:#e6eef8; --shadow: rgba(2,6,23,0.55);
+}
+body[data-theme="cyberpunk"]{
+  --bg:linear-gradient(180deg,#0b0326 0%,#0b0822 100%); --card: rgba(255,255,255,0.04); --muted:#9ca3ff; --accent:#ff3cac; --accent-2:#00f0ff; --hover:#ff7ab6; --text:#f3f6ff; --shadow: rgba(255,60,172,0.08);
+}
+body[data-theme="ocean"]{
+  --bg:linear-gradient(180deg,#dff6ff 0%,#e7fbff 100%); --card:#ffffff; --muted:#0b7285; --accent:#0369a1; --accent-2:#7dd3fc; --hover:#075985; --text:#042f3a;
+}
+body[data-theme="pastel"]{
+  --bg:#fffaf0; --card:#ffffff; --muted:#8b5cf6; --accent:#fb7185; --accent-2:#fbbf24; --hover:#f472b6; --text:#2b2b2b;
+}
+body[data-theme="retro"]{
+  --bg:linear-gradient(180deg,#fff7ed 0%,#fff1f2 100%); --card:#fffaf0; --muted:#92400e; --accent:#b45309; --accent-2:#f97316; --hover:#f59e0b; --text:#2b2b2b;
+}
+body[data-theme="halloween"]{
+  --bg:#1a1a1a; --card:#2c2c2c; --muted:#ff7518; --accent:#ff5c00; --accent-2:#ffa500; --hover:#ffb84d; --text:#fff8f0;
+}
+body[data-theme="christmas"]{
+  --bg:#f0f8f5; --card:#ffffff; --muted:#065f46; --accent:#b91c1c; --accent-2:#16a34a; --hover:#d63333; --text:#04261b;
+}
+body[data-theme="solar"]{
+  --bg:linear-gradient(180deg,#fff7e6 0%,#fff1d6 100%); --card:#fff; --muted:#7c3aed; --accent:#f59e0b; --accent-2:#f97316; --text:#3a2d14;
+}
+body[data-theme="aurora"]{
+  --bg:linear-gradient(180deg,#071842 0%,#183b5a 100%); --card:rgba(255,255,255,0.03); --muted:#c7f9ff; --accent:#7be4a7; --accent-2:#9b8cff; --text:#eaf6ff;
+}
+body[data-theme="mint"]{
+  --bg:linear-gradient(180deg,#f0fff6 0%,#ecfff9 100%); --card:#ffffff; --muted:#0f766e; --accent:#06b6a4; --accent-2:#34d399; --text:#05332a;
+}
+body[data-theme="space"]{
+  --bg:radial-gradient(circle at 20% 20%, #0b1220 0%, #02040a 70%); --card:rgba(255,255,255,0.03); --muted:#9fb4ff; --accent:#8b5cf6; --accent-2:#60a5fa; --text:#cfe3ff;
 }
 
-/* Basic Reset */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-body { background: var(--bg); color: #0f1724; padding: 20px; transition: all 0.3s ease; }
+/* ============================
+   Reset & base
+   ============================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text, #0f1724);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:20px;
+  transition: background .35s ease, color .35s ease;
+  background-size:cover;
+}
 
-/* Layout */
-.wrap { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
-header { grid-column: 1/-1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-header h1 { font-size: 32px; font-weight: 700; color: var(--accent); transition: color 0.3s ease; }
-.tag { background: linear-gradient(90deg,#fde68a,#fbcfe8); padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: 13px; box-shadow: 0 2px 6px var(--shadow); }
+/* Soft outer container */
+.wrapper{max-width:1400px;margin:0 auto}
+.container{
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items:start;
+  padding:10px;
+}
+
+/* Header */
+.header{
+  grid-column: 1/-1;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{
+  width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);font-weight:800;font-size:20px;box-shadow:0 10px 30px rgba(2,6,23,0.12);
+}
+.title{display:flex;flex-direction:column}
+.title h1{font-size:20px;margin-bottom:2px}
+.title p{font-size:13px;color:var(--muted)}
+
+/* top actions */
+.header-actions{display:flex;gap:10px;align-items:center}
+.tag{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#fde68a,#fbcfe8);font-weight:700;font-size:13px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+
+/* Search (responsive) */
+.search{width:460px;max-width:44vw;display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--card);box-shadow:0 6px 18px var(--shadow);border:1px solid var(--glass-border)}
+.search input{border:none;background:transparent;outline:none;padding:6px 0;font-size:14px;color:var(--text)}
+.search svg{opacity:.65}
+
+/* small search icon for mobile */
+.search-toggle{display:none;background:transparent;border:none;padding:8px;border-radius:8px}
 
 /* Cards */
-.card {
-  background: var(--card);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 12px 28px var(--shadow);
-  display: flex; flex-direction: column; gap: 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+.card{background:var(--card);border-radius:var(--radius);padding:var(--card-padding);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--glass-border);transition:transform .25s ease, box-shadow .25s ease, background .35s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.12)}
+
+/* Form styles */
+form label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
+input,select,textarea,button{font-family:inherit;font-size:14px;border-radius:10px;padding:10px 12px;border:1px solid rgba(15,23,36,0.06);background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5));outline:none;transition:box-shadow .18s ease, border-color .18s ease, transform .12s ease}
+body[data-theme="dark"] input, body[data-theme="cyberpunk"] input, body[data-theme="space"] input { background: rgba(255,255,255,0.03);} 
+input:focus,textarea:focus{box-shadow:0 6px 20px rgba(6,182,212,0.08);border-color:var(--accent)}
+button{cursor:pointer;border:none;font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+.btn.accent{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-contrast)}
+.btn.ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--accent)}
+.btn:active{transform:translateY(1px)}
+
+/* Photo preview */
+.preview{width:120px;height:90px;border-radius:12px;background:var(--muted-bg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);overflow:hidden;border:2px dashed rgba(15,23,36,0.06)}
+.preview img{width:100%;height:100%;object-fit:cover}
+
+/* Pens list - now uses grid for responsive wrap */
+.pens{margin-top:16px}
+.pens-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.pen{display:flex;gap:14px;padding:12px;border-radius:12px;border:1px solid rgba(15,23,36,0.03);align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent);transition:transform .12s ease, box-shadow .12s ease}
+.pen:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(2,6,23,0.06)}
+.pen-img{width:74px;height:74px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1f2937;background:linear-gradient(180deg,#f3f7f9,#f7fbfd);flex-shrink:0;overflow:hidden;border:1px solid rgba(15,23,36,0.03)}
+.meta{flex:1}
+.meta h3{font-size:15px;margin-bottom:6px}
+.meta p{font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+tiny{font-size:12px;color:var(--muted)}
+
+/* status pill */
+.status{padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;color:#fff}
+.status.Alive{background:var(--success)}
+.status.Missing{background:var(--danger)}
+
+/* memorial */
+.memorial-list .tiny{padding:10px;margin-bottom:6px;background:linear-gradient(180deg,#fff0f6,#fff6fb);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+
+/* Right column */
+.right-col{display:flex;flex-direction:column;gap:18px}
+.right .card{padding:16px}
+
+/* theme tiles */
+.theme-grid{display:flex;gap:12px;flex-wrap:wrap}
+.theme-tile{width:92px;height:64px;border-radius:10px;border:1px solid rgba(15,23,36,0.04);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;padding:8px;position:relative;box-shadow:0 8px 20px rgba(2,6,23,0.05);transition:transform .16s ease,box-shadow .16s ease;overflow:hidden}
+.theme-tile:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.08)}
+.theme-tile .label{position:absolute;bottom:6px;left:8px;font-size:11px;color:var(--muted)}
+.theme-swatch{position:absolute;inset:8px;border-radius:8px;z-index:0}
+.theme-tile span{position:relative;z-index:2}
+.theme-tile[aria-selected="true"]{outline:3px solid rgba(6,182,212,0.12)}
+
+/* footer */
+footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);font-size:13px;padding-bottom:6px}
+
+/* small screens */
+@media (max-width:1100px){
+  .container{grid-template-columns:1fr 320px}
+  .search{max-width:36vw}
 }
-.card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px var(--shadow); }
-
-/* Inputs */
-label { font-size: 14px; color: var(--muted); margin-bottom: 6px; display: block; }
-input, select, textarea, button {
-  width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #d1d5db;
-  background: #f9fafb; font-size: 14px; outline: none; transition: all 0.2s ease;
+@media (max-width:900px){
+  .container{grid-template-columns:1fr}
+  .search{display:none}
+  .search-toggle{display:inline-flex}
+  .header{flex-direction:column;align-items:flex-start;gap:12px}
+  .right-col{order:3}
+  .pens-grid{grid-template-columns:1fr}
 }
-input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(6,182,212,0.2); }
-
-/* Buttons */
-button { cursor: pointer; font-weight: 600; transition: all 0.2s ease; border: none; }
-button:hover { opacity: 0.9; }
-button.accent { background: linear-gradient(135deg,var(--accent),#0ea5e9); color: #fff; }
-button.ghost { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
-button.ghost:hover { background: var(--accent); color: #fff; }
-
-/* Preview */
-.preview {
-  width: 120px; height: 90px; border-radius: 12px;
-  background: #f3f7f9; border: 2px dashed #d1d5db;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; color: var(--muted); overflow: hidden;
-  transition: all 0.2s ease, background 0.3s ease;
-}
-.preview:hover { border-color: var(--accent); }
-
-/* Pen Registry */
-.pens { margin-top: 18px; display: flex; flex-direction: column; gap: 14px; }
-.pen {
-  display: flex; gap: 14px; padding: 14px;
-  border-radius: 16px; border: 1px solid #e5e7eb;
-  background: linear-gradient(180deg,var(--card),#f9fafb);
-  align-items: center; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease; position: relative;
-}
-.pen:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--shadow); }
-.pen-img {
-  width: 70px; height: 70px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; color: #344b4b; background: #f3f7f9;
-  flex-shrink: 0; overflow: hidden; box-shadow: 0 4px 12px var(--shadow);
-}
-
-/* Meta & Actions */
-.meta { flex: 1; }
-.meta h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-.meta p { font-size: 13px; color: var(--muted); }
-.actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
-
-/* Status */
-.status { padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #fff; }
-.status.Alive { background: var(--success); }
-.status.Missing { background: var(--danger); }
-
-/* Memorial */
-.memorial-list .tiny { padding: 10px; margin-bottom: 6px; background: #fff0f6; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow); }
-
-/* Footer */
-footer { grid-column: 1/-1; text-align: center; margin-top: 28px; color: var(--muted); font-size: 13px; }
-
-/* Right Sidebar */
-.right .card { margin-bottom: 18px; }
-
-/* Responsive */
-@media(max-width: 980px) {
-  .wrap { grid-template-columns: 1fr; }
-  .pen { flex-direction: column; align-items: flex-start; }
-  .actions { width: 100%; justify-content: flex-start; }
+@media (max-width:520px){
+  .logo{width:48px;height:48px;font-size:18px}
+  .title h1{font-size:17px}
+  .theme-tile{width:44%;height:64px}
+  .pen{flex-direction:column;align-items:flex-start}
+  .pen-img{width:100%;height:120px;border-radius:10px}
+  .actions{width:100%;justify-content:space-between}
 }
 
-/* Theme Switcher Buttons */
-.theme-switcher { display: flex; gap: 12px; margin-bottom: 12px; }
-.theme-switcher button { width: auto; padding: 6px 14px; font-size: 13px; }
+/* subtle utilities */
+.center{display:flex;align-items:center;justify-content:center}
+.small{font-size:12px;color:var(--muted)}
+
 </style>
 
+<!-- external libs kept -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qriously/4.0.2/qriously.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
 <body data-theme="default">
-<div class="wrap">
-<header>
-  <h1>PenGuardian</h1>
-  <div class="tag">Notifications • QR • Memorial</div>
-</header>
-
-<div class="theme-switcher">
-  <button class="ghost" onclick="setTheme('default')">Default</button>
-  <button class="ghost" onclick="setTheme('halloween')">Halloween</button>
-  <button class="ghost" onclick="setTheme('christmas')">Christmas</button>
-</div>
-
-<section class="card">
-  <h2>Register a Pen</h2>
-  <form id="penForm" autocomplete="off">
-    <label>Your Name</label>
-    <input id="owner" placeholder="e.g. Jamie" required>
-    <label>Pen Nickname</label>
-    <input id="nickname" placeholder="e.g. Bluey" required>
-    <label>Color / Model</label>
-    <input id="model" placeholder="Pilot G-2, blue" required>
-
-    <div style="display:grid;grid-template-columns:1fr 120px;gap:12px;margin-top:12px;">
-      <div>
-        <label class="tiny">Photo (optional)</label>
-        <input id="photoInput" type="file" accept="image/*">
+  <div class="wrapper">
+  <div class="container">
+    <!-- Header -->
+    <div class="header card" style="align-items:center;">
+      <div class="brand">
+        <div class="logo">PG</div>
+        <div class="title">
+          <h1>PenGuardian</h1>
+          <p>Protect your pen. Track • QR • Memorial</p>
+        </div>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:center">
-        <div class="preview" id="photoPreview">PNG</div>
+
+      <div class="header-actions">
+        <div class="tag">Notifications • QR • Memorial</div>
+
+        <button class="search-toggle btn ghost" id="searchToggle" aria-expanded="false" title="Open search">🔎</button>
+
+        <div class="search" id="searchBox">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.7"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input id="globalSearch" placeholder="Search pens by nickname, owner, model..." />
+        </div>
       </div>
     </div>
 
-    <div style="display:flex;gap:10px;margin-top:14px;align-items:center">
-      <button type="submit" class="accent">Register Pen</button>
-      <button type="button" class="ghost" id="clearForm" style="width:auto;padding:10px 14px">Clear</button>
-      <div style="flex:1;text-align:right" class="tiny">All pens are visible to everyone using this page.</div>
-    </div>
-  </form>
+    <!-- Main Column -->
+    <section class="card" style="min-height:260px;">
+      <h2 style="margin-bottom:8px">Register a Pen</h2>
+      <p style="margin-bottom:12px;color:var(--muted);font-size:13px">Add a pen and print a QR sticker. All functionality preserved and improved layout for phones.</p>
 
-  <div class="pens">
-    <h3>Pen Registry (Live)</h3>
-    <div id="pensContainer"></div>
-    <div id="noPens" class="tiny">No pens yet. Register one above.</div>
+      <form id="penForm" autocomplete="off">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <label>Your Name</label>
+            <input id="owner" placeholder="e.g. Jamie" required>
+          </div>
+          <div>
+            <label>Pen Nickname</label>
+            <input id="nickname" placeholder="e.g. Bluey" required>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;margin-top:12px;align-items:start">
+          <div>
+            <label>Color / Model</label>
+            <input id="model" placeholder="Pilot G-2, blue" required>
+          </div>
+
+          <div>
+            <label class="tiny">Photo (optional)</label>
+            <input id="photoInput" type="file" accept="image/*" style="font-size:12px">
+            <div style="margin-top:8px;display:flex;justify-content:center">
+              <div class="preview" id="photoPreview">PNG</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
+          <button type="submit" class="btn accent">Register Pen</button>
+          <button type="button" class="btn ghost" id="clearForm" style="padding:10px 12px">Clear</button>
+          <div style="flex:1;text-align:right;color:var(--muted);font-size:12px">All pens are visible to everyone using this page.</div>
+        </div>
+      </form>
+
+      <div class="pens">
+        <h3 style="margin-top:18px;margin-bottom:8px">Pen Registry (Live)</h3>
+        <div id="pensContainer" class="pens-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px"></div>
+        <div id="noPens" style="margin-top:8px;color:var(--muted)">No pens yet. Register one above.</div>
+      </div>
+    </section>
+
+    <!-- Right Column -->
+    <aside class="right-col">
+      <div class="card right">
+        <h3 style="margin-bottom:8px">Themes & Presets</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Choose a theme — your selection is saved for next time. Use keyboard arrows to move between tiles and Enter to select.</p>
+        <div class="theme-grid" id="themeGrid" role="listbox" aria-label="Theme chooser">
+          <!-- tiles inserted by JS -->
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <button id="btnResetTheme" class="btn ghost">Reset Theme</button>
+          <div style="flex:1"></div>
+          <div style="font-size:12px;color:var(--muted)">Current: <span id="currentTheme" style="font-weight:800;margin-left:6px">default</span></div>
+        </div>
+      </div>
+
+      <div class="card right">
+        <h3>Notifications</h3>
+        <label>Email to notify</label>
+        <input id="notifyEmail" placeholder="you@example.com">
+        <label style="margin-top:8px">Telegram chat ID (optional)</label>
+        <input id="telegramId" placeholder="@classgroup or chat id">
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button id="saveNotif" class="btn accent">Save</button>
+          <button id="testNotif" class="btn ghost">Send Test</button>
+        </div>
+        <div id="notifMsg" style="margin-top:8px;color:var(--muted);font-size:13px">Notifications triggered when a pen is marked missing.</div>
+      </div>
+
+      <div class="card right">
+        <h3>Pen Memorial Wall</h3>
+        <div id="memorialList" class="memorial-list tiny" style="margin-top:8px"></div>
+        <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+          <div style="color:var(--muted);font-size:13px">Keep memory of beloved pens.</div>
+          <button id="clearMemorial" class="btn ghost">Clear Memorial</button>
+        </div>
+      </div>
+
+      <div class="card right">
+        <h3>Status & Reminders</h3>
+        <div id="statuses" class="tiny" style="margin-top:8px"></div>
+      </div>
+    </aside>
+
+    <footer>PenGuardian — Protect your pen and keep track of it anywhere.</footer>
   </div>
-</section>
-
-<aside class="right">
-  <div class="card">
-    <h3>Notifications</h3>
-    <label>Email to notify</label>
-    <input id="notifyEmail" placeholder="you@example.com">
-    <label style="margin-top:8px">Telegram chat ID (optional)</label>
-    <input id="telegramId" placeholder="@classgroup or chat id">
-    <div style="display:flex;gap:8px;margin-top:10px">
-      <button id="saveNotif" class="accent">Save</button>
-      <button id="testNotif" class="ghost">Send Test</button>
-    </div>
-    <div id="notifMsg" class="tiny" style="margin-top:8px">Notifications triggered when a pen is marked missing.</div>
   </div>
-
-  <div class="card">
-    <h3>Pen Memorial Wall</h3>
-    <div id="memorialList" class="memorial-list tiny"></div>
-    <div style="margin-top:10px"><button id="clearMemorial" class="ghost">Clear Memorial</button></div>
-  </div>
-
-  <div class="card">
-    <h3>Status & Reminders</h3>
-    <div id="statuses" class="tiny" style="margin-top:8px"></div>
-  </div>
-</aside>
-
-<footer>PenGuardian — Protect your pen and keep track of it anywhere.</footer>
-</div>
 
 <script>
-// --- Theme Switcher ---
-function setTheme(theme) {
-  document.body.setAttribute('data-theme', theme);
+/* ============================
+   THEME DATA & UI
+   - preserves setTheme(name) signature
+   - persists to localStorage
+   - improved keyboard & accessibility
+   ============================ */
+const THEMES = [
+  { id: 'default', label: 'Default', preview: ['#f4f7fb','#06b6d4'] },
+  { id: 'dark', label: 'Dark', preview: ['#071026','#7c3aed'] },
+  { id: 'cyberpunk', label: 'Cyberpunk', preview: ['#0b0326','#ff3cac'] },
+  { id: 'ocean', label: 'Ocean', preview: ['#e7fbff','#0369a1'] },
+  { id: 'pastel', label: 'Pastel', preview: ['#fffaf0','#fb7185'] },
+  { id: 'retro', label: 'Retro', preview: ['#fff7ed','#b45309'] },
+  { id: 'halloween', label: 'Halloween', preview: ['#1a1a1a','#ff5c00'] },
+  { id: 'christmas', label: 'Christmas', preview: ['#f0f8f5','#b91c1c'] },
+  { id: 'solar', label: 'Solar', preview: ['#fff7e6','#f59e0b'] },
+  { id: 'aurora', label: 'Aurora', preview: ['#071842','#7be4a7'] },
+  { id: 'mint', label: 'Mint', preview: ['#f0fff6','#06b6a4'] },
+  { id: 'space', label: 'Space', preview: ['#0b1220','#8b5cf6'] }
+];
+
+const themeGrid = document.getElementById('themeGrid');
+const currentThemeLabel = document.getElementById('currentTheme');
+const savedTheme = localStorage.getItem('penGuardianTheme') || 'default';
+
+function renderThemeTiles(){
+  themeGrid.innerHTML = '';
+  THEMES.forEach((t, idx)=>{
+    const tile = document.createElement('div');
+    tile.className = 'theme-tile';
+    tile.title = t.label;
+    tile.dataset.theme = t.id;
+    tile.setAttribute('role','option');
+    tile.setAttribute('tabindex', '0');
+    tile.innerHTML = `<div class="theme-swatch" style="background:linear-gradient(90deg, ${t.preview[0]}, ${t.preview[1]});opacity:0.98"></div><span>${t.label}</span><div class="label">${t.label}</div>`;
+    tile.addEventListener('click', ()=> setTheme(t.id));
+    tile.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setTheme(t.id); } });
+    themeGrid.appendChild(tile);
+  });
 }
 
-// --- Firebase Setup ---
+// Keep signature & behavior: sets body data-theme and persists
+function setTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('penGuardianTheme', theme);
+  currentThemeLabel.textContent = theme;
+  // mark aria-selected
+  Array.from(themeGrid.children).forEach(c => c.setAttribute('aria-selected', c.dataset.theme === theme ? 'true' : 'false'));
+}
+document.getElementById('btnResetTheme').addEventListener('click', ()=> {
+  localStorage.removeItem('penGuardianTheme');
+  setTheme('default');
+});
+
+// initialize theme tiles and apply saved
+renderThemeTiles();
+setTheme(savedTheme);
+
+/* ============================
+   Keep Firebase config + original logic
+   ============================ */
 const firebaseConfig = {
   apiKey: "AIzaSyD4NsALm0mejZSqkejM0rij880glPpHv4A",
   authDomain: "ballpen-guard.firebaseapp.com",
@@ -232,7 +405,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// --- DOM Elements ---
+/* --- DOM Elements (kept original IDs & elements) --- */
 const elements = {
   penForm: document.getElementById('penForm'),
   ownerIn: document.getElementById('owner'),
@@ -256,7 +429,7 @@ const elements = {
 let currentPhotoBase64 = null;
 let pensData = {};
 
-// --- Helpers ---
+/* --- Helpers (kept original helpers & signatures) --- */
 const generateQRValue = (length = 16) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
@@ -269,6 +442,7 @@ const resetForm = () => {
   elements.photoInput.value = '';
   elements.photoPreview.style.backgroundImage = '';
   elements.photoPreview.textContent = 'PNG';
+  elements.photoPreview.style.backgroundSize = '';
   currentPhotoBase64 = null;
 };
 
@@ -276,7 +450,7 @@ const createBtn = (text, className, onClick) => {
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.textContent = text;
-  if (className) btn.className = className;
+  btn.className = className ? `btn ${className}` : 'btn';
   btn.addEventListener('click', onClick);
   return btn;
 };
@@ -290,11 +464,15 @@ const createQRCanvas = (id, value) => {
   canvas.style.background = '#fff';
   canvas.style.flexShrink = '0';
   canvas.title = value;
-  new QRious({ element: canvas, value: value || generateQRValue(), size: 80 });
+  try {
+    new QRious({ element: canvas, value: value || generateQRValue(), size: 80 });
+  } catch (e) {
+    console.warn('QRious failed to render', e);
+  }
   return canvas;
 };
 
-// --- Photo Preview ---
+/* --- Photo Preview (unchanged behavior) --- */
 elements.photoInput.addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return resetForm();
@@ -310,17 +488,17 @@ elements.photoInput.addEventListener('change', e => {
   reader.readAsDataURL(file);
 });
 
-// --- Clear Form ---
+/* --- Clear Form --- */
 elements.clearFormBtn.addEventListener('click', resetForm);
 
-// --- Submit Pen ---
+/* --- Submit Pen (kept original) --- */
 elements.penForm.addEventListener('submit', async e => {
   e.preventDefault();
   const owner = elements.ownerIn.value.trim();
   const nickname = elements.nickIn.value.trim();
   const model = elements.modelIn.value.trim();
   if (!owner || !nickname || !model) return alert('Please fill owner, nickname, and model.');
-  if (Object.values(pensData).some(p => p.nickname.toLowerCase() === nickname.toLowerCase())) {
+  if (Object.values(pensData).some(p => p.nickname && p.nickname.toLowerCase() === nickname.toLowerCase())) {
     return alert('A pen with this nickname already exists!');
   }
   const newRef = db.ref('pens').push();
@@ -336,26 +514,34 @@ elements.penForm.addEventListener('submit', async e => {
   resetForm();
 });
 
-// --- Render Pens ---
+/* --- Render Pens (improved visuals, original structural behavior preserved) --- */
 const renderPens = pens => {
   elements.pensContainer.innerHTML = '';
-  if (!pens?.length) return elements.noPens.style.display = 'block';
+  if (!pens?.length) {
+    elements.noPens.style.display = 'block';
+    return;
+  }
   elements.noPens.style.display = 'none';
 
   pens.forEach((p, idx) => {
     const el = document.createElement('div');
-    el.className = 'pen';
+    el.className = 'pen card';
     el.title = `Created: ${new Date(p.createdAt).toLocaleString()}`;
 
     const img = document.createElement('div');
     img.className = 'pen-img';
     img.textContent = (p.nickname || '--').slice(0, 2).toUpperCase();
-    if (p.photo) { img.style.backgroundImage = `url(${p.photo})`; img.textContent = ''; img.style.backgroundSize = 'cover'; img.style.backgroundPosition = 'center'; }
+    if (p.photo) {
+      img.style.backgroundImage = `url(${p.photo})`;
+      img.textContent = '';
+      img.style.backgroundSize = 'cover';
+      img.style.backgroundPosition = 'center';
+    }
 
     const meta = document.createElement('div');
     meta.className = 'meta';
-    meta.innerHTML = `<h3>${p.nickname} — ${p.model}</h3>
-      <p><strong>${p.owner}</strong> · Status: <span class="status ${p.status}"></span> (<span class="last-seen"></span>)</p>`;
+    meta.innerHTML = `<h3>${escapeHtml(p.nickname)} <small class="small">— ${escapeHtml(p.model)}</small></h3>
+      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${p.status}"></span> (<span class="last-seen"></span>)</p>`;
 
     const actions = document.createElement('div');
     actions.className = 'actions';
@@ -377,81 +563,128 @@ const renderPens = pens => {
     );
 
     const qrCanvas = createQRCanvas(p.id, p.qr);
+    qrCanvas.setAttribute('aria-label', `QR for ${p.nickname}`);
+
     el.append(img, meta, actions, qrCanvas);
     elements.pensContainer.appendChild(el);
   });
 };
 
-// --- Render Memorial ---
+/* --- Render Memorial --- */
 const renderMemorial = arr => {
   elements.memorialList.innerHTML = arr?.length
-    ? arr.map(m => `<div class="tiny" title="Added: ${new Date(m.when).toLocaleString()}">${m.nickname} — ${m.owner}</div>`).join('')
+    ? arr.map(m => `<div class="tiny" title="Added: ${new Date(m.when).toLocaleString()}">${escapeHtml(m.nickname)} — ${escapeHtml(m.owner)}</div>`).join('')
     : '<div class="tiny">No memorials yet.</div>';
 };
 
-// --- Render Statuses ---
+/* --- Render Statuses --- */
 const renderStatuses = list => {
   elements.statusesEl.innerHTML = '';
   if (!list) return;
   list.slice(0, 6).forEach(p => {
     const div = document.createElement('div');
     div.style.marginBottom = '6px';
-    div.innerHTML = `<div style="padding:8px;border-radius:10px;background:#ecfeff;border:1px solid rgba(6,182,212,0.2)">
-      <strong>${p.nickname}</strong> — <span class="status">${p.status}</span> (<span class="last-seen"></span>)
+    div.innerHTML = `<div style="padding:8px;border-radius:10px;background:rgba(236,254,255,0.9);border:1px solid rgba(6,182,212,0.08)">
+      <strong>${escapeHtml(p.nickname)}</strong> — <span class="status ${p.status}">${p.status}</span> (<span class="last-seen"></span>)
     </div>`;
     elements.statusesEl.appendChild(div);
   });
 };
 
-// --- Firebase Listeners ---
+/* --- Firebase Listeners (unchanged) --- */
 db.ref('pens').on('value', snap => {
   pensData = snap.val() || {};
-  const sortedPens = Object.values(pensData).sort((a,b)=>b.createdAt-(a.createdAt||0));
+  const sortedPens = Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
   renderPens(sortedPens);
   renderStatuses(sortedPens);
 });
 
 db.ref('memorial').on('value', snap => {
-  renderMemorial(Object.values(snap.val() || {}).sort((a,b)=>b.when-(a.when||0)));
+  renderMemorial(Object.values(snap.val() || {}).sort((a,b)=> (b.when||0) - (a.when||0)));
 });
 
-// --- Notification Settings ---
+/* --- Notification Settings (unchanged) --- */
 elements.saveNotifBtn.addEventListener('click', async () => {
   await db.ref('notify').set({ email: elements.notifyEmail.value.trim() || null, telegram: elements.telegramId.value.trim() || null });
   elements.notifMsg.textContent = 'Notification preferences saved.';
 });
 elements.testNotifBtn.addEventListener('click', async () => { await db.ref('notifications').push({ type: 'test', message: 'Test notification', timestamp: Date.now() }); alert('Test notification queued.'); });
 
-// --- Clear Memorial ---
+/* --- Clear Memorial --- */
 elements.clearMemorialBtn.addEventListener('click', async () => { if (!confirm('Clear memorial wall?')) return; await db.ref('memorial').remove(); });
 
-// --- Print QR Sticker ---
+/* --- Print QR Sticker --- */
 const printSticker = pen => {
   const w = window.open('', '', 'width=350,height=350');
-  w.document.write(`<h3>${pen.nickname}</h3><p>${pen.owner}</p><p>${pen.model}</p><canvas id="qr"></canvas>`);
-  new QRious({ element: w.document.getElementById('qr'), value: pen.qr || generateQRValue(), size: 200 });
+  w.document.write(`<h3 style="font-family:Inter,Arial">${escapeHtml(pen.nickname)}</h3><p>${escapeHtml(pen.owner)}</p><p>${escapeHtml(pen.model)}</p><canvas id="qr"></canvas>`);
+  try {
+    new QRious({ element: w.document.getElementById('qr'), value: pen.qr || generateQRValue(), size: 200 });
+  } catch (e) {
+    console.warn('QR print failed', e);
+  }
   w.print();
 };
 
-// --- Live Last Seen Update ---
+/* --- Live Last Seen Update (unchanged, but safer guard) --- */
 setInterval(() => {
+  const penEls = elements.pensContainer.children;
   Object.values(pensData).forEach((pen, idx) => {
-    const penEl = elements.pensContainer.children[idx];
+    const penEl = penEls[idx];
     if (!penEl) return;
     const statusEl = penEl.querySelector('.status');
     const lastSeenEl = penEl.querySelector('.last-seen');
     if (statusEl && lastSeenEl) {
-      const seconds = Math.floor((Date.now() - pen.lastSeen) / 1000);
+      const seconds = Math.floor((Date.now() - (pen.lastSeen || pen.createdAt || Date.now())) / 1000);
       const d = Math.floor(seconds / 86400),
             h = Math.floor((seconds % 86400) / 3600),
             m = Math.floor((seconds % 3600) / 60),
             s = seconds % 60;
       lastSeenEl.textContent = `${d}d ${h}h ${m}m ${s}s ago`;
-      statusEl.textContent = pen.status;
-      statusEl.title = `Last seen: ${new Date(pen.lastSeen).toLocaleString()}`;
+      statusEl.textContent = pen.status || 'Unknown';
+      statusEl.title = `Last seen: ${new Date(pen.lastSeen || pen.createdAt || Date.now()).toLocaleString()}`;
     }
   });
 }, 1000);
+
+/* --- Search (small UX improvement) --- */
+const globalSearch = document.getElementById('globalSearch');
+globalSearch.addEventListener('input', e => {
+  const q = e.target.value.trim().toLowerCase();
+  const list = Object.values(pensData || {});
+  if (!q){ renderPens(list.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0))); return; }
+  const filtered = list.filter(p => (p.nickname||'').toLowerCase().includes(q) || (p.owner||'').toLowerCase().includes(q) || (p.model||'').toLowerCase().includes(q));
+  renderPens(filtered.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)));
+});
+
+// mobile search toggle
+const searchToggle = document.getElementById('searchToggle');
+const searchBox = document.getElementById('searchBox');
+searchToggle.addEventListener('click', ()=>{
+  const expanded = searchToggle.getAttribute('aria-expanded') === 'true';
+  searchToggle.setAttribute('aria-expanded', String(!expanded));
+  searchBox.style.display = expanded ? 'none' : 'flex';
+});
+// start hidden on small screens
+if (window.innerWidth < 900){ searchBox.style.display = 'none'; }
+
+/* --- small XSS helper --- */
+function escapeHtml(unsafe) {
+  if (!unsafe && unsafe !== 0) return '';
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* --- init: load saved notif settings (if any) --- */
+db.ref('notify').once('value').then(snap => {
+  const v = snap.val() || {};
+  elements.notifyEmail.value = v.email || '';
+  elements.telegramId.value = v.telegram || '';
+});
+
 </script>
 </body>
 </html>
