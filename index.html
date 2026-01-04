@@ -27,6 +27,13 @@
   --text: #0f1724;
   --muted-bg: #f1f5f9;
   --accent-contrast: #ffffff;
+
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 28px;
+  --transition-fast: .12s;
+  --transition-base: .25s;
 }
 
 /* Theme palettes (extended & vivid) */
@@ -54,43 +61,52 @@ body{
   color: var(--text, #0f1724);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  padding:20px;
+  padding:28px;
   transition: background .35s ease, color .35s ease;
   background-size:cover;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Layout & components (kept & polished) */
+/* Layout & components */
 .wrapper{max-width:1400px;margin:0 auto}
 .container{max-width: var(--max-w);margin: 0 auto;display: grid;grid-template-columns: 1fr 380px;gap: 24px;align-items:start;padding:10px}
 .header{grid-column: 1/-1;display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
 .brand{display:flex;gap:12px;align-items:center}
-.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);font-weight:800;font-size:20px;box-shadow:0 10px 30px rgba(2,6,23,0.12)}
+.logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);font-weight:800;font-size:22px;box-shadow:0 12px 40px rgba(2,6,23,0.12)}
 .title{display:flex;flex-direction:column}
-.title h1{font-size:20px;margin-bottom:2px}
+.title h1{font-size:20px;margin-bottom:2px;letter-spacing:0.1px}
 .title p{font-size:13px;color:var(--muted)}
 .header-actions{display:flex;gap:10px;align-items:center}
-.tag{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#fde68a,#fbcfe8);font-weight:700;font-size:13px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
-.search{width:460px;max-width:44vw;display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--card);box-shadow:0 6px 18px var(--shadow);border:1px solid var(--glass-border)}
-.search input{border:none;background:transparent;outline:none;padding:6px 0;font-size:14px;color:var(--text)}
+.tag{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#fde68a,#fbcfe8);font-weight:700;font-size:13px;box-shadow:0 6px 18px rgba(2,6,23,0.06);color:#2b2b2b}
+.search{width:520px;max-width:44vw;display:flex;gap:8px;align-items:center;padding:10px;border-radius:12px;background:var(--card);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--glass-border)}
+.search svg{opacity:.7}
+.search input{border:none;background:transparent;outline:none;padding:8px 0;font-size:14px;color:var(--text)}
 .search-toggle{display:none;background:transparent;border:none;padding:8px;border-radius:8px}
-.card{background:var(--card);border-radius:var(--radius);padding:var(--card-padding);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--glass-border);transition:transform .25s ease, box-shadow .25s ease, background .35s ease}
-.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.12)}
+.card{background:var(--card);border-radius:var(--radius);padding:var(--card-padding);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--glass-border);transition:transform var(--transition-base) ease, box-shadow var(--transition-base) ease, background .35s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(2,6,23,0.12)}
+.card h2, .card h3{margin:0 0 8px 0}
+.card .muted { color: var(--muted); font-size:13px; }
+
+/* Inputs & buttons */
 form label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
 input,select,textarea,button{font-family:inherit;font-size:14px;border-radius:10px;padding:10px 12px;border:1px solid rgba(15,23,36,0.06);background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5));outline:none;transition:box-shadow .18s ease, border-color .18s ease, transform .12s ease}
 body[data-theme="dark"] input, body[data-theme="cyberpunk"] input, body[data-theme="space"] input { background: rgba(255,255,255,0.03);} 
-input:focus,textarea:focus{box-shadow:0 6px 20px rgba(6,182,212,0.08);border-color:var(--accent)}
+input:focus,textarea:focus{box-shadow:0 8px 30px rgba(6,182,212,0.08);border-color:var(--accent)}
 button{cursor:pointer;border:none;font-weight:700}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
-.btn.accent{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-contrast)}
-.btn.ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--accent)}
-.btn.small{padding:6px 8px;font-size:13px}
-.preview{width:120px;height:90px;border-radius:12px;background:var(--muted-bg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);overflow:hidden;border:2px dashed rgba(15,23,36,0.06)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;box-shadow:0 8px 26px rgba(2,6,23,0.06);transition:transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease}
+.btn:active{transform:translateY(1px)}
+.btn.accent{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-contrast);box-shadow:0 12px 36px rgba(6,182,212,0.12)}
+.btn.ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--muted);box-shadow:none}
+.btn.small{padding:8px 10px;font-size:13px}
+.preview{width:140px;height:100px;border-radius:12px;background:var(--muted-bg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);overflow:hidden;border:2px dashed rgba(15,23,36,0.06);position:relative}
 .preview img{width:100%;height:100%;object-fit:cover}
+.preview .remove-photo{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.45);color:#fff;padding:6px;border-radius:8px;border:0;font-size:12px;display:none}
+.preview:hover .remove-photo{display:inline-flex}
 .pens{margin-top:16px}
 .pens-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.pen{display:flex;gap:14px;padding:12px;border-radius:12px;border:1px solid rgba(15,23,36,0.03);align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent);transition:transform .12s ease, box-shadow .12s ease}
-.pen:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(2,6,23,0.06)}
-.pen-img{width:74px;height:74px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1f2937;background:linear-gradient(180deg,#f3f7f9,#f7fbfd);flex-shrink:0;overflow:hidden;border:1px solid rgba(15,23,36,0.03)}
+.pen{display:flex;gap:14px;padding:14px;border-radius:12px;border:1px solid rgba(15,23,36,0.03);align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent);transition:transform .12s ease, box-shadow .12s ease}
+.pen:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.06)}
+.pen-img{width:86px;height:86px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1f2937;background:linear-gradient(180deg,#f3f7f9,#f7fbfd);flex-shrink:0;overflow:hidden;border:1px solid rgba(15,23,36,0.03)}
 .meta{flex:1}
 .meta h3{font-size:15px;margin-bottom:6px}
 .meta p{font-size:13px;color:var(--muted)}
@@ -111,6 +127,13 @@ tiny{font-size:12px;color:var(--muted)}
 .theme-tile span{position:relative;z-index:2}
 .theme-tile[aria-selected="true"]{outline:3px solid rgba(6,182,212,0.12)}
 footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);font-size:13px;padding-bottom:6px}
+
+/* subtle micro-interactions */
+.pen .meta h3 small{color:var(--muted);font-weight:500;margin-left:6px}
+.pen .actions .btn{padding:8px 10px;font-size:13px}
+.card .help{font-size:13px;color:var(--muted);margin-bottom:10px}
+
+/* responsive */
 @media (max-width:1100px){ .container{grid-template-columns:1fr 320px} .search{max-width:36vw} }
 @media (max-width:900px){ .container{grid-template-columns:1fr} .search{display:none} .search-toggle{display:inline-flex} .header{flex-direction:column;align-items:flex-start;gap:12px} .right-col{order:3} .pens-grid{grid-template-columns:1fr} }
 @media (max-width:520px){ .logo{width:48px;height:48px;font-size:18px} .title h1{font-size:17px} .theme-tile{width:44%;height:64px} .pen{flex-direction:column;align-items:flex-start} .pen-img{width:100%;height:120px;border-radius:10px} .actions{width:100%;justify-content:space-between} }
@@ -118,7 +141,10 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 .small{font-size:12px;color:var(--muted)}
 
 /* focus outlines for keyboard users */
-.theme-tile:focus, .btn:focus, input:focus, .search-toggle:focus { outline: 3px solid rgba(6,182,212,0.12); outline-offset: 2px; }
+.theme-tile:focus, .btn:focus, input:focus, .search-toggle:focus, button:focus { outline: 3px solid rgba(6,182,212,0.12); outline-offset: 2px; }
+
+/* accessibility helpers */
+.sr-only{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 </style>
 
 <!-- external libs kept as requested -->
@@ -130,57 +156,59 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 </head>
 <body data-theme="default">
   <div class="wrapper">
-  <div class="container">
+  <div class="container" role="main" aria-labelledby="appTitle">
     <!-- Header -->
     <div class="header card" style="align-items:center;">
       <div class="brand">
-        <div class="logo">PG</div>
+        <div class="logo" aria-hidden="true">PG</div>
         <div class="title">
-          <h1>PenGuardian</h1>
+          <h1 id="appTitle">PenGuardian</h1>
           <p>Protect your pen. Track • QR • Memorial</p>
         </div>
       </div>
 
-      <div class="header-actions">
-        <div class="tag">Notifications • QR • Memorial</div>
+      <div class="header-actions" role="region" aria-label="Header actions">
+        <div class="tag" title="Quick actions and status">Notifications • QR • Memorial</div>
 
-        <button class="search-toggle btn ghost" id="searchToggle" aria-expanded="false" title="Open search">🔎</button>
+        <button class="search-toggle btn ghost" id="searchToggle" aria-expanded="false" aria-controls="searchBox" title="Open search">🔎</button>
 
-        <div class="search" id="searchBox">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.7"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="search" id="searchBox" role="search" aria-label="Search pens">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.7" aria-hidden="true"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <input id="globalSearch" placeholder="Search pens by nickname, owner, model..." aria-label="Search pens" />
         </div>
       </div>
     </div>
 
     <!-- Main Column -->
-    <section class="card" style="min-height:260px;">
-      <h2 style="margin-bottom:8px">Register a Pen</h2>
-      <p style="margin-bottom:12px;color:var(--muted);font-size:13px">Add a pen and print a QR sticker. Everything is improved and backed-up locally when offline.</p>
+    <section class="card" style="min-height:260px;" aria-labelledby="registerTitle">
+      <h2 id="registerTitle">Register a Pen</h2>
+      <p class="muted" style="margin-bottom:12px">Add a pen and print a QR sticker. Everything is improved and backed-up locally when offline.</p>
 
-      <form id="penForm" autocomplete="off">
+      <form id="penForm" autocomplete="off" aria-label="Register a pen form">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div>
-            <label>Your Name</label>
-            <input id="owner" placeholder="e.g. Jamie" required>
+            <label for="owner">Your Name</label>
+            <input id="owner" placeholder="e.g. Jamie" required aria-required="true" />
           </div>
           <div>
-            <label>Pen Nickname</label>
-            <input id="nickname" placeholder="e.g. Bluey" required>
+            <label for="nickname">Pen Nickname</label>
+            <input id="nickname" placeholder="e.g. Bluey" required aria-required="true" />
           </div>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;margin-top:12px;align-items:start">
           <div>
-            <label>Color / Model</label>
-            <input id="model" placeholder="Pilot G-2, blue" required>
+            <label for="model">Color / Model</label>
+            <input id="model" placeholder="Pilot G-2, blue" required />
           </div>
 
           <div>
-            <label class="tiny">Photo (optional)</label>
-            <input id="photoInput" type="file" accept="image/*" style="font-size:12px">
+            <label class="tiny" for="photoInput">Photo (optional)</label>
+            <input id="photoInput" type="file" accept="image/*" style="font-size:12px" />
             <div style="margin-top:8px;display:flex;justify-content:center">
-              <div class="preview" id="photoPreview">PNG</div>
+              <div class="preview" id="photoPreview" aria-live="polite" aria-label="Photo preview">PNG
+                <button type="button" class="remove-photo" title="Remove photo" style="display:none" aria-hidden="true">✕</button>
+              </div>
             </div>
           </div>
         </div>
@@ -195,23 +223,23 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
       <div class="pens">
         <h3 style="margin-top:18px;margin-bottom:8px">Pen Registry (Live)</h3>
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-          <button id="exportJson" class="btn small ghost">Export JSON</button>
-          <label for="importFile" class="btn small ghost" style="display:inline-flex;align-items:center;cursor:pointer">Import JSON</label>
+          <button id="exportJson" class="btn small ghost" title="Export registry">Export JSON</button>
+          <label for="importFile" class="btn small ghost" style="display:inline-flex;align-items:center;cursor:pointer" title="Import registry">Import JSON</label>
           <input id="importFile" type="file" accept="application/json" style="display:none" />
-          <button id="printBatch" class="btn small ghost">Print Stickers (Batch)</button>
+          <button id="printBatch" class="btn small ghost" title="Print QR stickers for multiple pens">Print Stickers (Batch)</button>
           <div style="flex:1"></div>
           <div style="font-size:12px;color:var(--muted)">Total: <span id="penCount">0</span></div>
         </div>
-        <div id="pensContainer" class="pens-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px"></div>
+        <div id="pensContainer" class="pens-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px" aria-live="polite"></div>
         <div id="noPens" style="margin-top:8px;color:var(--muted)">No pens yet. Register one above.</div>
       </div>
     </section>
 
     <!-- Right Column -->
-    <aside class="right-col">
-      <div class="card right">
-        <h3 style="margin-bottom:8px">Themes & Presets</h3>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Choose a theme — saved for next time. Use arrows to move between tiles and Enter to select.</p>
+    <aside class="right-col" aria-label="Sidebar">
+      <div class="card right" aria-labelledby="themesTitle">
+        <h3 id="themesTitle">Themes & Presets</h3>
+        <p class="muted" style="margin-bottom:10px">Choose a theme — saved for next time. Use arrows to move between tiles and Enter to select.</p>
         <div class="theme-grid" id="themeGrid" role="listbox" aria-label="Theme chooser" tabindex="0"></div>
         <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
           <button id="btnResetTheme" class="btn ghost">Reset Theme</button>
@@ -220,12 +248,12 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
         </div>
       </div>
 
-      <div class="card right">
-        <h3>Notifications</h3>
-        <label>Email to notify</label>
-        <input id="notifyEmail" placeholder="you@example.com" type="email">
-        <label style="margin-top:8px">Telegram chat ID (optional)</label>
-        <input id="telegramId" placeholder="@classgroup or chat id">
+      <div class="card right" aria-labelledby="notifTitle">
+        <h3 id="notifTitle">Notifications</h3>
+        <label for="notifyEmail">Email to notify</label>
+        <input id="notifyEmail" placeholder="you@example.com" type="email" />
+        <label style="margin-top:8px" for="telegramId">Telegram chat ID (optional)</label>
+        <input id="telegramId" placeholder="@classgroup or chat id" />
         <div style="display:flex;gap:8px;margin-top:10px">
           <button id="saveNotif" class="btn accent">Save</button>
           <button id="testNotif" class="btn ghost">Send Test</button>
@@ -233,17 +261,17 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
         <div id="notifMsg" style="margin-top:8px;color:var(--muted);font-size:13px">Notifications triggered when a pen is marked missing.</div>
       </div>
 
-      <div class="card right">
-        <h3>Pen Memorial Wall</h3>
-        <div id="memorialList" class="memorial-list tiny" style="margin-top:8px"></div>
+      <div class="card right" aria-labelledby="memorialTitle">
+        <h3 id="memorialTitle">Pen Memorial Wall</h3>
+        <div id="memorialList" class="memorial-list tiny" style="margin-top:8px" aria-live="polite"></div>
         <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
           <div style="color:var(--muted);font-size:13px">Keep memory of beloved pens.</div>
           <button id="clearMemorial" class="btn ghost">Clear Memorial</button>
         </div>
       </div>
 
-      <div class="card right">
-        <h3>Status & Reminders</h3>
+      <div class="card right" aria-labelledby="statusTitle">
+        <h3 id="statusTitle">Status & Reminders</h3>
         <div id="statuses" class="tiny" style="margin-top:8px"></div>
       </div>
     </aside>
@@ -255,13 +283,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 <script>
 /* ============================
   Polished PenGuardian - main JS
-  Goals:
-   - Keep original function signatures & behaviors
-   - Add IndexedDB fallback (async)
-   - Prefer Firebase; fallback to IDB; then localStorage
-   - Optimistic UI updates
-   - Improved import/export/print
-   - Keep QRious script(s) usage (both included)
+  Original behaviors preserved; UI enhancements only.
 ============================ */
 
 /* ---------- Utilities ---------- */
@@ -531,7 +553,8 @@ const elements = {
   printBatch: document.getElementById('printBatch'),
   globalSearch: document.getElementById('globalSearch'),
   searchToggle: document.getElementById('searchToggle'),
-  searchBox: document.getElementById('searchBox')
+  searchBox: document.getElementById('searchBox'),
+  removePhotoBtn: null
 };
 
 let currentPhotoBase64 = null;
@@ -565,9 +588,29 @@ elements.photoInput.addEventListener('change', e => {
     elements.photoPreview.textContent = '';
     elements.photoPreview.style.backgroundSize = 'cover';
     elements.photoPreview.style.backgroundPosition = 'center';
+    // show a small remove button if present
+    const removeBtn = elements.photoPreview.querySelector('.remove-photo');
+    if (removeBtn) {
+      removeBtn.style.display = 'inline-flex';
+      removeBtn.setAttribute('aria-hidden', 'false');
+    }
   };
   reader.readAsDataURL(file);
 });
+
+/* optional quick remove photo UI (non-invasive) */
+(function attachRemovePhoto(){
+  const rm = elements.photoPreview.querySelector('.remove-photo');
+  if (!rm) return;
+  elements.removePhotoBtn = rm;
+  rm.addEventListener('click', () => {
+    currentPhotoBase64 = null;
+    elements.photoInput.value = '';
+    elements.photoPreview.style.backgroundImage = '';
+    elements.photoPreview.textContent = 'PNG';
+    rm.style.display = 'none';
+  });
+})();
 
 /* ---------- reset form (original) ---------- */
 function resetForm(){
@@ -579,6 +622,8 @@ function resetForm(){
   elements.photoPreview.textContent = 'PNG';
   elements.photoPreview.style.backgroundSize = '';
   currentPhotoBase64 = null;
+  const removeBtn = elements.photoPreview.querySelector('.remove-photo');
+  if (removeBtn) { removeBtn.style.display = 'none'; removeBtn.setAttribute('aria-hidden','true'); }
 }
 
 /* ---------- create button helper ---------- */
@@ -680,7 +725,7 @@ function renderPens(list){
         try {
           await safeUpdate(`pens/${p.id}`, { status: 'Missing', lastSeen: now() });
           await safePush('notifications', { type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: now() });
-          alert(`🚨 Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
+          alert(`Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
         } catch(e){ console.warn(e); }
       }),
       createBtn('Mourn', 'ghost', async ()=>{
@@ -869,7 +914,7 @@ function printSticker(pen){
   if (!w) return alert('Popup blocked — allow popups for printing.');
   const html = `
     <html><head><title>QR Sticker - ${escapeHtml(pen.nickname)}</title>
-    <style>body{font-family:Inter,Arial;padding:16px} .sticker{display:flex;align-items:center;gap:12px}</style>
+    <style>body{font-family:Inter,Arial;padding:16px} .sticker{display:flex;align-items:center;gap:12px} .sticker h3{margin:0}</style>
     </head><body>
     <div class="sticker">
       <div>
