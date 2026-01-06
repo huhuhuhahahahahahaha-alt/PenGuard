@@ -69,7 +69,7 @@ body{
 
 /* Layout & components */
 .wrapper{max-width:1400px;margin:0 auto}
-.container{max-width: var(--max-w);margin: 0 auto;display: grid;grid-template-columns: 1fr 420px;gap: 24px;align-items:start;padding:10px}
+.container{max-width: var(--max-w);margin: 0 auto;display: grid;grid-template-columns: 1fr 380px;gap: 24px;align-items:start;padding:10px}
 .header{grid-column: 1/-1;display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
 .brand{display:flex;gap:12px;align-items:center}
 .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);font-weight:800;font-size:22px;box-shadow:0 12px 40px rgba(2,6,23,0.12)}
@@ -115,7 +115,6 @@ tiny{font-size:12px;color:var(--muted)}
 .status{padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;color:#fff}
 .status.Alive{background:var(--success)}
 .status.Missing{background:var(--danger)}
-.status.Stolen{background:#ff4d4f}
 .status.Unknown{background:rgba(156,163,175,0.9)}
 .memorial-list .tiny{padding:10px;margin-bottom:6px;background:linear-gradient(180deg,#fff0f6,#fff6fb);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
 .right-col{display:flex;flex-direction:column;gap:18px}
@@ -135,7 +134,7 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 .card .help{font-size:13px;color:var(--muted);margin-bottom:10px}
 
 /* responsive */
-@media (max-width:1100px){ .container{grid-template-columns:1fr 360px} .search{max-width:36vw} }
+@media (max-width:1100px){ .container{grid-template-columns:1fr 320px} .search{max-width:36vw} }
 @media (max-width:900px){ .container{grid-template-columns:1fr} .search{display:none} .search-toggle{display:inline-flex} .header{flex-direction:column;align-items:flex-start;gap:12px} .right-col{order:3} .pens-grid{grid-template-columns:1fr} }
 @media (max-width:520px){ .logo{width:48px;height:48px;font-size:18px} .title h1{font-size:17px} .theme-tile{width:44%;height:64px} .pen{flex-direction:column;align-items:flex-start} .pen-img{width:100%;height:120px;border-radius:10px} .actions{width:100%;justify-content:space-between} }
 .center{display:flex;align-items:center;justify-content:center}
@@ -146,11 +145,6 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 
 /* accessibility helpers */
 .sr-only{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-
-/* small utility styles for lists */
-.list-item{padding:8px;border-radius:10px;border:1px solid rgba(15,23,36,0.04);margin-bottom:8px;background:linear-gradient(180deg,rgba(255,255,255,0.75),transparent)}
-.small-meta{font-size:12px;color:var(--muted)}
-.badge{padding:6px 8px;border-radius:8px;font-weight:700;font-size:12px}
 </style>
 
 <!-- external libs kept as requested -->
@@ -174,12 +168,6 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
       </div>
 
       <div class="header-actions" role="region" aria-label="Header actions">
-        <div style="display:flex;gap:8px;align-items:center">
-          <label for="currentUser" class="sr-only">Current user full name</label>
-          <input id="currentUser" placeholder="Your full name (for owner actions)" style="width:240px" />
-          <button id="setUserBtn" class="btn small ghost" title="Set current user">Set</button>
-        </div>
-
         <div class="tag" title="Quick actions and status">Notifications • QR • Memorial</div>
 
         <button class="search-toggle btn ghost" id="searchToggle" aria-expanded="false" aria-controls="searchBox" title="Open search">🔎</button>
@@ -199,8 +187,8 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
       <form id="penForm" autocomplete="off" aria-label="Register a pen form">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div>
-            <label for="owner">Owner Full Name</label>
-            <input id="owner" placeholder="e.g. Jamie Delgado" required aria-required="true" />
+            <label for="owner">Your Name</label>
+            <input id="owner" placeholder="e.g. Jamie" required aria-required="true" />
           </div>
           <div>
             <label for="nickname">Pen Nickname</label>
@@ -222,18 +210,6 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
                 <button type="button" class="remove-photo" title="Remove photo" style="display:none" aria-hidden="true">✕</button>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
-          <div>
-            <label for="penPassword">Pen Password (owner-only actions)</label>
-            <input id="penPassword" type="password" placeholder="Create a password for this pen" required />
-            <div class="small" style="margin-top:6px;color:var(--muted)">This password is required to mark missing/found/stolen as the owner.</div>
-          </div>
-          <div>
-            <label for="notes">Notes (optional)</label>
-            <input id="notes" placeholder="E.g. favors blue ink, gift from..." />
           </div>
         </div>
 
@@ -272,22 +248,31 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
         </div>
       </div>
 
-      <div class="card right" aria-labelledby="borrowTitle">
-        <h3 id="borrowTitle">Borrow Requests</h3>
-        <p class="muted" style="margin-bottom:8px">Requests to borrow pens (owners can Accept / Decline)</p>
-        <div id="borrowList" style="max-height:200px;overflow:auto"></div>
+      <div class="card right" aria-labelledby="notifTitle">
+        <h3 id="notifTitle">Notifications</h3>
+        <label for="notifyEmail">Email to notify</label>
+        <input id="notifyEmail" placeholder="you@example.com" type="email" />
+        <label style="margin-top:8px" for="telegramId">Telegram chat ID (optional)</label>
+        <input id="telegramId" placeholder="@classgroup or chat id" />
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button id="saveNotif" class="btn accent">Save</button>
+          <button id="testNotif" class="btn ghost">Send Test</button>
+        </div>
+        <div id="notifMsg" style="margin-top:8px;color:var(--muted);font-size:13px">Notifications triggered when a pen is marked missing.</div>
       </div>
 
-      <div class="card right" aria-labelledby="foundTitle">
-        <h3 id="foundTitle">Found Claims</h3>
-        <p class="muted" style="margin-bottom:8px">Strangers who claim to have found pens.</p>
-        <div id="foundClaims" style="max-height:200px;overflow:auto"></div>
+      <div class="card right" aria-labelledby="memorialTitle">
+        <h3 id="memorialTitle">Pen Memorial Wall</h3>
+        <div id="memorialList" class="memorial-list tiny" style="margin-top:8px" aria-live="polite"></div>
+        <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+          <div style="color:var(--muted);font-size:13px">Keep memory of beloved pens.</div>
+          <button id="clearMemorial" class="btn ghost">Clear Memorial</button>
+        </div>
       </div>
 
-      <div class="card right" aria-labelledby="stolenTitle">
-        <h3 id="stolenTitle">Stolen Alerts</h3>
-        <p class="muted" style="margin-bottom:8px">Owner-submitted stolen alerts.</p>
-        <div id="stolenAlerts" style="max-height:160px;overflow:auto"></div>
+      <div class="card right" aria-labelledby="statusTitle">
+        <h3 id="statusTitle">Status & Reminders</h3>
+        <div id="statuses" class="tiny" style="margin-top:8px"></div>
       </div>
     </aside>
 
@@ -297,9 +282,8 @@ footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);fon
 
 <script>
 /* ============================
-  PenGuardian - enhanced JS
-  Includes: borrow requests, found claims, stolen alerts, owner password flows.
-  Original behaviors preserved; UI and features extended.
+  Polished PenGuardian - main JS
+  Original behaviors preserved; UI enhancements only.
 ============================ */
 
 /* ---------- Utilities ---------- */
@@ -308,7 +292,6 @@ const now = () => Date.now();
 
 function safeJSONParse(s, fallback){ try { return JSON.parse(s); } catch(e){ return fallback; } }
 function isValidEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||'')); }
-function formatDate(ts){ if(!ts) return ''; const d = new Date(ts); return d.toLocaleString() + ' — ' + d.toISOString(); }
 
 /* ---------- Theme UI (keeps setTheme API) ---------- */
 const THEMES = [
@@ -367,7 +350,7 @@ setTheme(savedTheme);
 /* ---------- IndexedDB wrapper (tiny, promise-based) ---------- */
 const IDB_DB = 'penGuardianDB_v2';
 const IDB_VERSION = 1;
-const IDB_STORES = ['pens','memorial','notify','notifications','borrowRequests','foundClaims','stolenAlerts'];
+const IDB_STORES = ['pens','memorial','notify','notifications'];
 
 function openIDB(){
   return new Promise((resolve, reject) => {
@@ -571,38 +554,11 @@ const elements = {
   globalSearch: document.getElementById('globalSearch'),
   searchToggle: document.getElementById('searchToggle'),
   searchBox: document.getElementById('searchBox'),
-  removePhotoBtn: null,
-  currentUserInput: document.getElementById('currentUser'),
-  setUserBtn: document.getElementById('setUserBtn'),
-  borrowList: document.getElementById('borrowList'),
-  foundClaimsEl: document.getElementById('foundClaims'),
-  stolenAlertsEl: document.getElementById('stolenAlerts'),
-  penPasswordIn: document.getElementById('penPassword'),
-  notesIn: document.getElementById('notes'),
-  importFileInput: document.getElementById('importFile')
+  removePhotoBtn: null
 };
 
 let currentPhotoBase64 = null;
 let pensData = {}; // map by id (live view)
-let borrowRequests = []; // array
-let foundClaims = [];
-let stolenAlerts = [];
-
-/* ---------- authentication-lite: current user ---------- */
-function getCurrentUser(){
-  return (localStorage.getItem('penGuardian_currentUser') || '').trim();
-}
-function setCurrentUser(name){
-  localStorage.setItem('penGuardian_currentUser', (name||'').trim());
-  elements.currentUserInput.value = (name||'').trim();
-  renderAll();
-}
-elements.setUserBtn.addEventListener('click', ()=> {
-  const v = elements.currentUserInput.value.trim();
-  setCurrentUser(v);
-  alert(v ? `Current user set to "${v}"` : 'Current user cleared');
-});
-elements.currentUserInput.value = getCurrentUser();
 
 /* ---------- core helpers (original signatures preserved) ---------- */
 const generateQRValue = (length = 16) => {
@@ -666,8 +622,6 @@ function resetForm(){
   elements.photoPreview.textContent = 'PNG';
   elements.photoPreview.style.backgroundSize = '';
   currentPhotoBase64 = null;
-  elements.penPasswordIn.value = '';
-  elements.notesIn.value = '';
   const removeBtn = elements.photoPreview.querySelector('.remove-photo');
   if (removeBtn) { removeBtn.style.display = 'none'; removeBtn.setAttribute('aria-hidden','true'); }
 }
@@ -722,13 +676,6 @@ function removeLocal(id){
   renderPens(Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0)));
 }
 
-/* ---------- helper: check owner ---------- */
-function isCurrentUserOwner(pen){
-  const user = getCurrentUser();
-  if (!user) return false;
-  return String((pen.owner||'').trim()).toLowerCase() === String(user).toLowerCase();
-}
-
 /* ---------- Render functions (improved & original behavior preserved) ---------- */
 function renderPens(list){
   elements.pensContainer.innerHTML = '';
@@ -759,151 +706,28 @@ function renderPens(list){
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.innerHTML = `<h3>${escapeHtml(p.nickname)} <small class="small">— ${escapeHtml(p.model)}</small></h3>
-      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${escapeHtml(p.status||'Unknown')}"></span> (<span class="last-seen"></span>)</p>
-      <div class="small-meta">Registered: ${new Date(p.createdAt||0).toLocaleString()}</div>`;
+      <p><strong>${escapeHtml(p.owner)}</strong> · Status: <span class="status ${escapeHtml(p.status||'Unknown')}"></span> (<span class="last-seen"></span>)</p>`;
 
     const actions = document.createElement('div');
     actions.className = 'actions';
 
-    // Update Seen - public
     actions.append(
       createBtn('Update Seen', 'ghost', async ()=>{
+        // optimistic
         const updated = { ...p, lastSeen: now(), status: 'Alive' };
         addOrUpdateLocal(updated);
         try { await safeUpdate(`pens/${p.id}`, { lastSeen: now(), status: 'Alive' }); } catch(e){ console.warn(e); }
-      })
-    );
-
-    // Borrow button (public) -> open small prompt to request borrow
-    actions.append(
-      createBtn('Request Borrow', 'ghost', async ()=>{
-        const borrower = prompt('Your full name (required to request borrow):');
-        if (!borrower) return alert('Full name required to request borrow.');
-        const message = prompt('Optional message to owner (e.g. reason, return date):') || '';
-        const req = {
-          id: 'borrow_' + now() + '_' + Math.random().toString(36).slice(2,8),
-          penId: p.id,
-          penNickname: p.nickname,
-          owner: p.owner,
-          borrowerName: borrower.trim(),
-          message,
-          status: 'pending',
-          createdAt: now()
-        };
-        // optimistic UI push to local array and sidebar
-        borrowRequests.unshift(req);
-        renderBorrowRequests();
-        try { await safePush('borrowRequests', req); } catch(e){ console.warn(e); }
-        alert('Borrow request submitted.');
-      })
-    );
-
-    // Found button (public) -> choose owner or stranger path
-    actions.append(
-      createBtn('Found', 'ghost', async ()=>{
-        const who = confirm('Are you the owner of this pen? Press OK if you are the owner (you will be asked for the pen password). Press Cancel if you are reporting as a stranger.');
-        if (who) {
-          const pw = prompt('Enter pen password to claim (owner):');
-          if (!pw) return alert('Password required to claim as owner.');
-          if (String(pw) === String(p.password || '')) {
-            const updated = { ...p, lastSeen: now(), status: 'Alive' };
-            addOrUpdateLocal(updated);
-            try { await safeUpdate(`pens/${p.id}`, { lastSeen: now(), status: 'Alive' }); } catch(e){ console.warn(e); }
-            // record found event
-            const foundEvent = {
-              id: 'found_' + now() + '_' + Math.random().toString(36).slice(2,8),
-              penId: p.id,
-              penNickname: p.nickname,
-              reporterName: p.owner,
-              reporterType: 'owner',
-              createdAt: now()
-            };
-            foundClaims.unshift(foundEvent);
-            renderFoundClaims();
-            try { await safePush('foundClaims', foundEvent); } catch(e){ console.warn(e); }
-            alert('Thank you — pen marked as found and returned to owner status.');
-          } else {
-            alert('Password incorrect. If you truly are the owner but forgot the password, contact the pen registrant or admin.');
-          }
-        } else {
-          const name = prompt('Your full name (required):');
-          if (!name) return alert('Full name required to file a found claim.');
-          const note = prompt('Optional note (where you found it):') || '';
-          const claim = {
-            id: 'found_' + now() + '_' + Math.random().toString(36).slice(2,8),
-            penId: p.id,
-            penNickname: p.nickname,
-            reporterName: name.trim(),
-            reporterType: 'stranger',
-            note,
-            createdAt: now()
-          };
-          foundClaims.unshift(claim);
-          renderFoundClaims();
-          try { await safePush('foundClaims', claim); } catch(e){ console.warn(e); }
-          alert('Thank you — your found claim has been recorded. The owner will be able to see it.');
-        }
-      })
-    );
-
-    // Mark Missing - requires owner password
-    actions.append(
+      }),
       createBtn('Mark Missing', '', async ()=>{
-        // require password of pen (owner-only)
-        const user = getCurrentUser();
-        if (!user) {
-          alert('Set your full name in the header first to identify yourself as the owner.');
-          return;
-        }
-        if (!isCurrentUserOwner(p)) {
-          alert('Only the pen owner (as set in header) may mark this pen missing. Set your current user to the owner name first.');
-          return;
-        }
-        const pw = prompt('Enter pen password to mark as missing:');
-        if (!pw) return;
-        if (String(pw) !== String(p.password || '')) return alert('Password incorrect.');
-        if (!confirm(`Mark "${p.nickname}" as missing? This will create a missing notification.`)) return;
+        if (!confirm(`Mark "${p.nickname}" as missing?`)) return;
         const updated = { ...p, lastSeen: now(), status: 'Missing' };
         addOrUpdateLocal(updated);
         try {
           await safeUpdate(`pens/${p.id}`, { status: 'Missing', lastSeen: now() });
           await safePush('notifications', { type: 'missing', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: now() });
-          // also push stolen alert record? not here; stolen is separate
-          alert(`Marked "${p.nickname}" as missing.`);
+          alert(`Oh no! ${p.owner} lost their pen "${p.nickname}"!`);
         } catch(e){ console.warn(e); }
-      })
-    );
-
-    // Stolen Alert - owner-only, requires pen password, creates stolen alert record
-    actions.append(
-      createBtn('Stolen Alert', 'ghost', async ()=>{
-        if (!isCurrentUserOwner(p)) return alert('Only the pen owner can submit a stolen alert. Set current user to pen owner first.');
-        const pw = prompt('Enter pen password to submit stolen alert:');
-        if (!pw) return;
-        if (String(pw) !== String(p.password || '')) return alert('Password incorrect.');
-        if (!confirm('Submit a STOLEN alert for this pen? This will set status to "Stolen" and create an alert record.')) return;
-        const updated = { ...p, status: 'Stolen', lastSeen: now() };
-        addOrUpdateLocal(updated);
-        const alertRec = {
-          id: 'stolen_' + now() + '_' + Math.random().toString(36).slice(2,8),
-          penId: p.id,
-          penNickname: p.nickname,
-          owner: p.owner,
-          createdAt: now()
-        };
-        stolenAlerts.unshift(alertRec);
-        renderStolenAlerts();
-        try {
-          await safeUpdate(`pens/${p.id}`, { status: 'Stolen', lastSeen: now() });
-          await safePush('stolenAlerts', alertRec);
-          await safePush('notifications', { type: 'stolen', penId: p.id, nickname: p.nickname, owner: p.owner, timestamp: now() });
-        } catch(e){ console.warn(e); }
-        alert('Stolen alert submitted.');
-      })
-    );
-
-    // Mourn (remove + memorial)
-    actions.append(
+      }),
       createBtn('Mourn', 'ghost', async ()=>{
         if (!confirm(`Add "${p.nickname}" to Memorial Wall?`)) return;
         try {
@@ -911,22 +735,14 @@ function renderPens(list){
           await safeRemove(`pens/${p.id}`);
           removeLocal(p.id);
         } catch(e){ console.warn(e); }
-      })
-    );
-
-    // Delete
-    actions.append(
+      }),
       createBtn('Delete', 'ghost', async ()=>{
         if (!confirm(`Delete "${p.nickname}"?`)) return;
         try {
           await safeRemove(`pens/${p.id}`);
           removeLocal(p.id);
         } catch(e){ console.warn(e); }
-      })
-    );
-
-    // Print QR
-    actions.append(
+      }),
       createBtn('Print QR', 'ghost', () => printSticker(p))
     );
 
@@ -938,87 +754,7 @@ function renderPens(list){
   });
 }
 
-/* ---------- render borrow requests, found claims, stolen alerts ---------- */
-function renderBorrowRequests(){
-  elements.borrowList.innerHTML = '';
-  if (!borrowRequests.length) {
-    elements.borrowList.innerHTML = '<div class="small-meta">No borrow requests.</div>';
-    return;
-  }
-  borrowRequests.slice(0,50).forEach(r => {
-    const d = document.createElement('div');
-    d.className = 'list-item';
-    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-        <div><strong>${escapeHtml(r.borrowerName)}</strong> <span class="small-meta">wants to borrow <em>${escapeHtml(r.penNickname)}</em></span></div>
-        <div class="small-meta">${new Date(r.createdAt).toLocaleString()}</div>
-      </div>
-      <div class="small-meta" style="margin-top:6px">${escapeHtml(r.message || '')}</div>
-      <div style="margin-top:8px"></div>`;
-    const actionsEl = d.querySelector('div:last-child');
-    // If current user is owner, show accept/decline
-    const current = getCurrentUser();
-    if (current && String((r.owner||'')).toLowerCase() === String(current).toLowerCase()) {
-      actionsEl.appendChild(createBtn(r.status === 'accepted' ? 'Accepted' : 'Accept', r.status === 'accepted' ? 'accent' : 'ghost', async ()=>{
-        if (r.status === 'accepted') return;
-        if (!confirm(`Accept borrow request from ${r.borrowerName}?`)) return;
-        r.status = 'accepted';
-        r.respondedAt = now();
-        renderBorrowRequests();
-        try { await safeUpdate(`borrowRequests/${r.id}`, { status: r.status, respondedAt: r.respondedAt }); } catch(e){ try { await safePush('borrowRequests', r); } catch(e){} }
-        alert('Request accepted. Consider contacting the borrower to coordinate.');
-      }));
-      actionsEl.appendChild(createBtn(r.status === 'declined' ? 'Declined' : 'Decline', r.status === 'declined' ? 'ghost' : 'ghost', async ()=>{
-        if (r.status === 'declined') return;
-        if (!confirm(`Decline borrow request from ${r.borrowerName}?`)) return;
-        r.status = 'declined';
-        r.respondedAt = now();
-        renderBorrowRequests();
-        try { await safeUpdate(`borrowRequests/${r.id}`, { status: r.status, respondedAt: r.respondedAt }); } catch(e){ try { await safePush('borrowRequests', r); } catch(e){} }
-      }));
-    } else {
-      actionsEl.innerHTML = `<div class="small-meta">Status: ${escapeHtml(r.status)}</div>`;
-    }
-    elements.borrowList.appendChild(d);
-  });
-}
-
-function renderFoundClaims(){
-  elements.foundClaimsEl.innerHTML = '';
-  if (!foundClaims.length) {
-    elements.foundClaimsEl.innerHTML = '<div class="small-meta">No found claims.</div>';
-    return;
-  }
-  foundClaims.slice(0,50).forEach(c => {
-    const d = document.createElement('div');
-    d.className = 'list-item';
-    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-        <div><strong>${escapeHtml(c.reporterName)}</strong> <span class="small-meta">(${escapeHtml(c.reporterType || '')})</span></div>
-        <div class="small-meta">${new Date(c.createdAt).toLocaleString()}</div>
-      </div>
-      <div class="small-meta" style="margin-top:6px">Pen: <em>${escapeHtml(c.penNickname)}</em></div>
-      <div class="small-meta" style="margin-top:6px">${escapeHtml(c.note || '')}</div>`;
-    elements.foundClaimsEl.appendChild(d);
-  });
-}
-
-function renderStolenAlerts(){
-  elements.stolenAlertsEl.innerHTML = '';
-  if (!stolenAlerts.length) {
-    elements.stolenAlertsEl.innerHTML = '<div class="small-meta">No stolen alerts.</div>';
-    return;
-  }
-  stolenAlerts.slice(0,50).forEach(s => {
-    const d = document.createElement('div');
-    d.className = 'list-item';
-    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-        <div><strong>${escapeHtml(s.owner)}</strong> <span class="small-meta">— stolen: <em>${escapeHtml(s.penNickname)}</em></span></div>
-        <div class="small-meta">${new Date(s.createdAt).toLocaleString()}</div>
-      </div>`;
-    elements.stolenAlertsEl.appendChild(d);
-  });
-}
-
-/* ---------- render memorial & statuses (kept) ---------- */
+/* ---------- render memorial & statuses ---------- */
 function renderMemorial(arr){
   elements.memorialList.innerHTML = arr?.length
     ? arr.map(m => `<div class="tiny" title="Added: ${new Date(m.when||0).toLocaleString()}">${escapeHtml(m.nickname)} — ${escapeHtml(m.owner)}</div>`).join('')
@@ -1053,28 +789,6 @@ async function initialLoad(){
       const arr = Object.values(snap.val() || {});
       renderMemorial(arr.sort((a,b)=> (b.when||0) - (a.when||0)));
     });
-    // extra collections
-    db.ref('borrowRequests').on('value', snap => {
-      try {
-        const raw = snap.val() || {};
-        borrowRequests = Object.values(raw).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-      } catch(e){ borrowRequests = []; }
-      renderBorrowRequests();
-    });
-    db.ref('foundClaims').on('value', snap => {
-      try {
-        const raw = snap.val() || {};
-        foundClaims = Object.values(raw).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-      } catch(e){ foundClaims = []; }
-      renderFoundClaims();
-    });
-    db.ref('stolenAlerts').on('value', snap => {
-      try {
-        const raw = snap.val() || {};
-        stolenAlerts = Object.values(raw).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-      } catch(e){ stolenAlerts = []; }
-      renderStolenAlerts();
-    });
     return;
   }
 
@@ -1087,11 +801,6 @@ async function initialLoad(){
     renderStatuses(sorted);
     const memorialArr = await idbGetAll('memorial');
     renderMemorial(memorialArr.sort((a,b)=> (b.when||0)-(a.when||0)));
-    // load borrowRequests, foundClaims, stolenAlerts
-    borrowRequests = (await idbGetAll('borrowRequests')).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-    foundClaims = (await idbGetAll('foundClaims')).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-    stolenAlerts = (await idbGetAll('stolenAlerts')).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-    renderBorrowRequests(); renderFoundClaims(); renderStolenAlerts();
     // load notify settings
     try {
       const notify = (await idbGetAll('notify')).find(x=> x.id === 'settings');
@@ -1110,10 +819,6 @@ async function initialLoad(){
     renderStatuses(sorted);
     const memorialRaw = localStorage.getItem('penGuardian_fallback_memorial') || '[]';
     renderMemorial(safeJSONParse(memorialRaw, []).sort((a,b)=> (b.when||0)-(a.when||0)));
-    borrowRequests = safeJSONParse(localStorage.getItem('penGuardian_fallback_borrowRequests') || '[]', []).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-    foundClaims = safeJSONParse(localStorage.getItem('penGuardian_fallback_foundClaims') || '[]', []).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-    stolenAlerts = safeJSONParse(localStorage.getItem('penGuardian_fallback_stolenAlerts') || '[]', []).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-    renderBorrowRequests(); renderFoundClaims(); renderStolenAlerts();
   }
 }
 initialLoad();
@@ -1124,9 +829,7 @@ elements.penForm.addEventListener('submit', async e => {
   const owner = elements.ownerIn.value.trim();
   const nickname = elements.nickIn.value.trim();
   const model = elements.modelIn.value.trim();
-  const password = elements.penPasswordIn.value || '';
-  const notes = elements.notesIn.value || '';
-  if (!owner || !nickname || !model || !password) return alert('Please fill owner, nickname, model, and password.');
+  if (!owner || !nickname || !model) return alert('Please fill owner, nickname, and model.');
 
   // unique nickname check (case-insensitive)
   const exists = Object.values(pensData).some(p => p.nickname && p.nickname.toLowerCase() === nickname.toLowerCase());
@@ -1141,9 +844,7 @@ elements.penForm.addEventListener('submit', async e => {
     status: 'Alive',
     createdAt: now(),
     lastSeen: now(),
-    qr: generateQRValue(),
-    password: password, // stored plaintext here for simplicity; in real apps, hash server-side
-    notes: notes
+    qr: generateQRValue()
   };
 
   // optimistic add to UI
@@ -1170,51 +871,44 @@ elements.penForm.addEventListener('submit', async e => {
   resetForm();
 });
 
-/* ---------- Notification settings with debounce (kept) ---------- */
+/* ---------- Notification settings with debounce ---------- */
 let notifyDebounce = null;
-// NOTE: those notification buttons may be hidden from UI if not present (we left markup originally but not used here).
-if (elements.saveNotifBtn) {
-  elements.saveNotifBtn.addEventListener('click', async () => {
-    const email = elements.notifyEmail.value.trim() || null;
-    const telegram = elements.telegramId.value.trim() || null;
-    if (email && !isValidEmail(email)) return alert('Please enter a valid email address.');
-    const payload = { email, telegram };
-    // optimistic UI message
-    elements.notifMsg.textContent = 'Saving...';
-    try {
-      await safeSet('notify', payload);
-      // also store to IDB for offline
-      await idbPut('notify', { id: 'settings', ...payload });
-      elements.notifMsg.textContent = 'Notification preferences saved.';
-    } catch(e){
-      elements.notifMsg.textContent = 'Failed to save notification preferences.';
-      console.warn(e);
-    }
-  });
-}
-if (elements.testNotifBtn) {
-  elements.testNotifBtn.addEventListener('click', async () => {
-    try {
-      await safePush('notifications', { type: 'test', message: 'Test notification', timestamp: now() });
-      alert('Test notification queued.');
-    } catch(e){ console.warn(e); alert('Failed to queue test notification.'); }
-  });
-}
+elements.saveNotifBtn.addEventListener('click', async () => {
+  const email = elements.notifyEmail.value.trim() || null;
+  const telegram = elements.telegramId.value.trim() || null;
+  if (email && !isValidEmail(email)) return alert('Please enter a valid email address.');
+  const payload = { email, telegram };
+  // optimistic UI message
+  elements.notifMsg.textContent = 'Saving...';
+  try {
+    await safeSet('notify', payload);
+    // also store to IDB for offline
+    await idbPut('notify', { id: 'settings', ...payload });
+    elements.notifMsg.textContent = 'Notification preferences saved.';
+  } catch(e){
+    elements.notifMsg.textContent = 'Failed to save notification preferences.';
+    console.warn(e);
+  }
+});
+elements.testNotifBtn.addEventListener('click', async () => {
+  try {
+    await safePush('notifications', { type: 'test', message: 'Test notification', timestamp: now() });
+    alert('Test notification queued.');
+  } catch(e){ console.warn(e); alert('Failed to queue test notification.'); }
+});
 
-/* ---------- Clear memorial (kept) ---------- */
-if (elements.clearMemorialBtn) {
-  elements.clearMemorialBtn.addEventListener('click', async () => {
-    if (!confirm('Clear memorial wall?')) return;
-    try {
-      await safeRemove('memorial');
-      renderMemorial([]);
-      // clear idb local too
-      try { await idbClear('memorial'); } catch(e){}
-    } catch(e){ console.warn(e); }
-  });
-}
+/* ---------- Clear memorial ---------- */
+elements.clearMemorialBtn.addEventListener('click', async () => {
+  if (!confirm('Clear memorial wall?')) return;
+  try {
+    await safeRemove('memorial');
+    renderMemorial([]);
+    // clear idb local too
+    try { await idbClear('memorial'); } catch(e){}
+  } catch(e){ console.warn(e); }
+});
 
-/* ---------- Print single sticker (original) ---------- */
+/* ---------- Print single sticker (original) & batch print ---------- */
 function printSticker(pen){
   const w = window.open('', '', 'width=400,height=500');
   if (!w) return alert('Popup blocked — allow popups for printing.');
@@ -1244,7 +938,7 @@ function printSticker(pen){
   }, 250);
 }
 
-/* Batch sticker printing: prints up to first 12 pens on a sheet (kept) */
+/* Batch sticker printing: prints up to first 12 pens on a sheet */
 elements.printBatch.addEventListener('click', ()=>{
   const list = Object.values(pensData).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)).slice(0,12);
   if (!list.length) return alert('No pens to print.');
@@ -1291,7 +985,7 @@ setInterval(()=>{
   });
 }, 1000);
 
-/* ---------- Search with debounce & highlighting (kept) ---------- */
+/* ---------- Search with debounce & highlighting ---------- */
 function debounce(fn, wait=200){ let t; return (...args)=>{ clearTimeout(t); t = setTimeout(()=> fn(...args), wait); }; }
 elements.globalSearch.addEventListener('input', debounce(e=>{
   const q = e.target.value.trim().toLowerCase();
@@ -1310,24 +1004,24 @@ if (window.innerWidth < 900) elements.searchBox.style.display = 'none';
 
 /* ---------- Export / Import (merge-aware) ---------- */
 elements.exportJson.addEventListener('click', async ()=>{
-  // include pens + memorials + borrowRequests + foundClaims + stolenAlerts
+  // include pens + memorials
   const pens = Object.values(pensData || {});
   let memorial = [];
   try { memorial = await idbGetAll('memorial'); } catch(e){ memorial = safeJSONParse(localStorage.getItem('penGuardian_fallback_memorial'), []); }
-  const out = { exportedAt: new Date().toISOString(), pens, memorial, borrowRequests, foundClaims, stolenAlerts };
+  const out = { exportedAt: new Date().toISOString(), pens, memorial };
   const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = `penguardian_export_${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 });
 
-elements.importFileInput.addEventListener('change', async (ev)=>{
+elements.importFile.addEventListener('change', async (ev)=>{
   const file = ev.target.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = async e => {
     try {
       const data = JSON.parse(e.target.result);
-      const arr = Array.isArray(data.pens) ? data.pens : (Array.isArray(data) ? data : (data.pens || []));
+      const arr = Array.isArray(data) ? data : (data.pens || data);
       if (!Array.isArray(arr)) throw new Error('Invalid import file format.');
       let imported = 0;
       for (const p of arr) {
@@ -1341,8 +1035,7 @@ elements.importFileInput.addEventListener('change', async (ev)=>{
           status: p.status || 'Alive',
           createdAt: p.createdAt || now(),
           lastSeen: p.lastSeen || now(),
-          qr: p.qr || generateQRValue(),
-          password: p.password || (p.pw || '') // best-effort
+          qr: p.qr || generateQRValue()
         };
         // avoid duplicate nickname
         const dup = Object.values(pensData).some(x => x.nickname && x.nickname.toLowerCase() === (payload.nickname||'').toLowerCase());
@@ -1367,20 +1060,20 @@ elements.importFileInput.addEventListener('change', async (ev)=>{
     } catch(err){
       alert('Import failed: ' + err.message);
     } finally {
-      elements.importFileInput.value = '';
+      elements.importFile.value = '';
     }
   };
   reader.readAsText(file);
 });
 
-/* ---------- load notify settings from firebase/idb/local (kept) ---------- */
+/* ---------- init: try to load notify settings from firebase/idb/local ---------- */
 (async function loadNotify(){
   if (db) {
     try {
       const snap = await db.ref('notify').once('value');
       const v = snap.val() || {};
-      if (elements.notifyEmail) elements.notifyEmail.value = v.email || '';
-      if (elements.telegramId) elements.telegramId.value = v.telegram || '';
+      elements.notifyEmail.value = v.email || '';
+      elements.telegramId.value = v.telegram || '';
       return;
     } catch(e){ console.warn(e); }
   }
@@ -1388,20 +1081,20 @@ elements.importFileInput.addEventListener('change', async (ev)=>{
   try {
     const res = await idbGetAll('notify');
     const settings = res.find(x => x.id === 'settings');
-    if (settings) { if (elements.notifyEmail) elements.notifyEmail.value = settings.email || ''; if (elements.telegramId) elements.telegramId.value = settings.telegram || ''; return; }
+    if (settings) { elements.notifyEmail.value = settings.email || ''; elements.telegramId.value = settings.telegram || ''; return; }
   } catch(e){}
   // fallback localStorage
   const raw = localStorage.getItem('penGuardian_fallback_notify');
   if (raw) {
     try {
       const v = JSON.parse(raw);
-      if (elements.notifyEmail) elements.notifyEmail.value = v.email || '';
-      if (elements.telegramId) elements.telegramId.value = v.telegram || '';
+      elements.notifyEmail.value = v.email || '';
+      elements.telegramId.value = v.telegram || '';
     } catch(e){}
   }
 })();
 
-/* ---------- keyboard UX niceties (kept) ---------- */
+/* ---------- keyboard UX niceties ---------- */
 window.addEventListener('keydown', (e)=>{
   if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
     e.preventDefault(); elements.globalSearch.focus();
@@ -1418,37 +1111,7 @@ if (!db) {
       renderPens(arr.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)));
     } catch(e){}
   }, 3000);
-
-  // also sync borrow/found/stolen
-  setInterval(async ()=>{
-    try {
-      borrowRequests = (await idbGetAll('borrowRequests')).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-      foundClaims = (await idbGetAll('foundClaims')).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-      stolenAlerts = (await idbGetAll('stolenAlerts')).sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
-      renderBorrowRequests(); renderFoundClaims(); renderStolenAlerts();
-    } catch(e){}
-  }, 4000);
 }
-
-/* ---------- helper to render everything that may depend on current user ---------- */
-function renderAll(){
-  const sorted = Object.values(pensData).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
-  renderPens(sorted);
-  renderBorrowRequests();
-  renderFoundClaims();
-  renderStolenAlerts();
-}
-
-/* ---------- public API: allow manual refresh (if needed) ---------- */
-window.penguardian = {
-  refresh: renderAll
-};
-
-// initial render of borrow/found/stolen lists if loaded from earlier
-renderBorrowRequests();
-renderFoundClaims();
-renderStolenAlerts();
-
 </script>
 </body>
 </html>
